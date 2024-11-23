@@ -12,6 +12,7 @@ const Content = React.forwardRef(function({
 
   return (
     <div
+    ref={ref}
     className={`content ${twMerge(getResponsiveContainerWidth(span) || "", importedClassName)}`}
     {...rest}
     >
@@ -20,4 +21,5 @@ const Content = React.forwardRef(function({
   );
 })
 
+Content.displayName = "Content";
 export default Content;

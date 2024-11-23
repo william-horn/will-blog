@@ -1,14 +1,15 @@
 // import getStylesFromProps from "@/util/getStylesFromProps";
 import { twMerge } from "tailwind-merge";
 import { getResponsiveTextSize } from "@/lib/util/responsive";
+import React from "react";
 
-const Heading = ({ 
+const Heading = React.forwardRef(function({ 
   children, 
   type,
   textSize,
   className: importedClassName="",
   ...rest
-}) => {
+}, ref) {
 
   const getHTag = (type, children, props) => {
     switch (type) {
@@ -27,13 +28,15 @@ const Heading = ({
     type, 
     children, 
     {
+      ref,
       ...rest,
       className: twMerge(
-        `${getResponsiveTextSize(textSize)} heading-text leading-6 py-2 text-0 font-0 text-center`,
+        `${getResponsiveTextSize(textSize)} heading-text leading-normal py-2 text-0 font-0 text-center`,
         importedClassName
       )
     }
   );
-};
+});
 
+Heading.displayName = "Heading"
 export default Heading;

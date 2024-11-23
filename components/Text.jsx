@@ -14,7 +14,7 @@ const Text = React.forwardRef(function({
     <p 
     ref={ref}
     className={twMerge(
-      `${getResponsiveTextSize(textSize) || ''} general-text leading-6 text-0 font-0 align-middle block`,
+      `${getResponsiveTextSize(textSize) || ''} general-text text-0 font-0 block align-middle`,
       importedClassName
     )}
     {...rest}>
@@ -23,6 +23,6 @@ const Text = React.forwardRef(function({
   );
 });
 
-// Text.displayName = "Text"; // for ESlint
+Text.displayName = "Text"; // for ESlint
 export default Text;
 

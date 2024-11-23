@@ -20,4 +20,5 @@ const Divider = React.forwardRef(function({
   );
 })
 
+Divider.displayName = "Divider";
 export default Divider;

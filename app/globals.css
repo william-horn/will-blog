@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Fade dpwm amo,atopm */
+  --fade-down-function: cubic-bezier(0, 0.79, 0.19, 1.07);
+  --fade-down-speed: 2s;
+
+  --fade-down-0: var(--fade-down-speed) var(--fade-down-function) 0s forwards;
+  --fade-down-1: var(--fade-down-speed) var(--fade-down-function) 0.5s forwards;
+  --fade-down-2: var(--fade-down-speed) var(--fade-down-function) 1s forwards;
+  --fade-down-3: var(--fade-down-speed) var(--fade-down-function) 1.5s forwards;
+  --fade-down-4: var(--fade-down-speed) var(--fade-down-function) 2s forwards;
+
+  /* Fade om animation */
+  --fade-in-speed: 2s;
+
+  --fade-in-0: var(--fade-in-speed) ease-out 0s forwards;
+  --fade-in-1: var(--fade-in-speed) ease-out 0.5s forwards;
+  --fade-in-2: var(--fade-in-speed) ease-out 1s forwards;
+  --fade-in-3: var(--fade-in-speed) ease-out 1.5s forwards;
+  --fade-in-4: var(--fade-in-speed) ease-out 2s forwards;
+}
+
 .theme-default {
 
 }
@@ -14,19 +35,34 @@
   --bg-color-1-inset: #020202;
 
   /* TEXT COLOR */
-  --text-color-0: #ffffff;
+  --text-color-0: #e1e1e1;
+  --text-color-1: #DB2A94;
+  --text-color-2: #DB682A;
+  --text-color-3: #DB492A;
+  --text-color-4: #DB872A;
+  --text-color-5: #DB8573;
+
+  --text-color-0-muted: #858585;
 
   /* TEXT FONT */
   --text-font-0: "Montserrat", sans-serif;
   --text-font-1: "Oswald", serif;
-  --text-font-2: font-family: "Arsenal SC", serif;
-
+  --text-font-2: "Arsenal SC", serif;
+  --text-font-3: "Doto", sans-serif;
+  --text-font-4: "Josefin Sans", sans-serif;
+  --text-font-5: "Play", sans-serif;
+  --text-font-6: "Jacquard 12", system-ui;
+  --text-font-7: "Courier Prime", monospace;
+  --text-font-8: "Roboto Mono", monospace;
+  
   /* SCROLLBAR */
   --bg-color-0-scroll-bar: #4d4d4d;
   --bg-color-0-scroll-bar-hover: #4d4d4d;
   --bg-color-0-scroll-bar-track: rgba(47, 47, 51, 0.7);
 
   --scroll-bar-width: 8px;
+
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -73,39 +109,8 @@ input::placeholder {
   background: var(--bg-color-0-scroll-bar); 
 }
 
-.montserrat {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.oswald-regular {
-  font-family: "Oswald", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.arsenal-sc-regular,
-.arsenal-sc-bold,
-.arsenal-sc-regular-italic,
-.arsenal-sc-bold-italic {
-  font-family: "Arsenal SC", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-/* a {
-  color: #dc51cd;
-  font-weight: 200;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-} */
-
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background: var(--bg-color-0);
+  padding: 8px;
   height: 250vh;
 }
