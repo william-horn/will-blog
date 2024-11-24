@@ -18,7 +18,7 @@ const Footer = () => {
         textSize="3xl"
         className="pt-2 text-center opacity-0 animate-fade-in-1 text-0-muted font-6"
         >
-          November 23, 2024
+          2024
         </Text>
       </footer>
     </>
