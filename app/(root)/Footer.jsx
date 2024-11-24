@@ -8,29 +8,21 @@ import { getResponsivePadding } from "@/lib/util/responsive";
 
 import React from 'react';
 
-const Header = () => {
+const Footer = () => {
   return (
     <>
-      <header
-      className={`${getResponsivePadding("6xl", "top")} ${getResponsivePadding("4xl", "bottom")}`}
+      <footer
+      className="mt-14 bg-0-inset h-[200px]"
       >
-        <Heading 
-        textSize="7xl" 
-        type="h1" 
-        className={`relative leading-tight animate-fade-down-0 text-1 px-4 font-6 ${getResponsivePadding("6xl", "bottom")}`}
-        >
-          Della Porta Cipher - The Shifting Method
-        </Heading>
-
         <Text 
         textSize="3xl"
         className="pt-2 text-center opacity-0 animate-fade-in-1 text-0-muted font-6"
         >
           November 23, 2024
         </Text>
-      </header>
+      </footer>
     </>
   );
 };
 
-export default Header;
+export default Footer;

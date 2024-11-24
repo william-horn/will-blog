@@ -30,19 +30,20 @@
 .theme-dark {
   /* BACKGROUND */
   --bg-color-0: #171717;
-  --bg-color-0-inset: #080808;
+  --bg-color-0-inset: #1c1c1c;
   --bg-color-1: #020202;
-  --bg-color-1-inset: #020202;
+  --bg-color-1-inset: #252424;
 
   /* TEXT COLOR */
-  --text-color-0: #e1e1e1;
+  --text-color-0: #858585;
   --text-color-1: #DB2A94;
   --text-color-2: #DB682A;
   --text-color-3: #DB492A;
   --text-color-4: #DB872A;
   --text-color-5: #DB8573;
+  --text-color-6: #eeeeee;
 
-  --text-color-0-muted: #858585;
+  --text-color-0-muted: #535353;
 
   /* TEXT FONT */
   --text-font-0: "Montserrat", sans-serif;
@@ -51,9 +52,10 @@
   --text-font-3: "Doto", sans-serif;
   --text-font-4: "Josefin Sans", sans-serif;
   --text-font-5: "Play", sans-serif;
-  --text-font-6: "Jacquard 12", system-ui;
+  --text-font-6: "Jacquard 24", system-ui;
   --text-font-7: "Courier Prime", monospace;
   --text-font-8: "Roboto Mono", monospace;
+  --text-font-9: "MedievalSharp", cursive;
   
   /* SCROLLBAR */
   --bg-color-0-scroll-bar: #4d4d4d;
@@ -63,6 +65,16 @@
   --scroll-bar-width: 8px;
 
   /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+
+.code-theme-0 {
+  --object-color: #DAD085;
+  --type-color: #CDA869;
+  --regular-color: #eeeeee;
+  --string-color: #8F9D6A;
+  --operator-color: #CDA869;
+  --number-color: #CF6A4C;
+  --comment-color: #5F5A60;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -111,6 +123,4 @@ input::placeholder {
 
 body {
   background: var(--bg-color-0);
-  padding: 8px;
-  height: 250vh;
 }

@@ -14,7 +14,7 @@ const Text = React.forwardRef(function({
     <p 
     ref={ref}
     className={twMerge(
-      `${getResponsiveTextSize(textSize) || ''} general-text text-0 font-0 block align-middle`,
+      `${getResponsiveTextSize(textSize) || ''} general-text !leading-[2] text-0 font-0 block align-middle`,
       importedClassName
     )}
     {...rest}>

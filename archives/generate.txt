@@ -1,0 +1,48 @@
+
+const getKey = rowIndex => {
+  return `${String.fromCharCode(97 + 2*rowIndex).toUpperCase()},${String.fromCharCode(97 + 2*rowIndex + 1).toUpperCase()}`
+}
+
+const generateRow = rowIndex => {
+  const row = [];
+
+  for (let i = 0; i < 13; i++) {
+    row[i] = String.fromCharCode(110 + (i + rowIndex)%13).toUpperCase()
+  }
+
+  return row
+}
+
+const generateGrid = () => {
+  const rows = [];
+
+  for (let i = 0; i < 13; i++) {
+    rows[i] = generateRow(i);
+  }
+
+  return rows
+}
+
+<Paragraph className="flex flex-col justify-start gap-1 font-7">
+  <span className="flex justify-center gap-6 pb-5 fobg-neutral-700">
+    <span>Key&nbsp;</span>
+    {
+      ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'].map((v, i) => {
+        return <span key={i + 100}>{v}</span>
+      })
+    }
+  </span>
+  {
+    generateGrid().map((row, index) => 
+      <span key={index} className="flex justify-center gap-9">
+        <span className="inline">{getKey(index)}</span>
+
+        <span className="flex justify-center gap-6 font-7">
+          {row.map((value, pos) =>
+            <span key={pos + 100}>{value}</span>
+          )}
+        </span>
+      </span>
+    )
+  }
+</Paragraph>

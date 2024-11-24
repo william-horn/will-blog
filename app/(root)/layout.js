@@ -3,21 +3,39 @@ import "../globals.css";
 import Wireframe from "@/components/Wireframe";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import { Jacquard_12, Montserrat } from "next/font/google";
+import { 
+  Jacquard_24, 
+  Montserrat,
+  Courier_Prime,
+  MedievalSharp,
+} from "next/font/google";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
-const jacquard = Jacquard_12({
+const jacquard_24 = Jacquard_24({
   subsets: ['latin'],
   weight: ['400'],
-  // variable: "--text-font--6",
+  style: ['normal']
 });
 
 const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['100', '900'],
+  weight: ['100', '200', '300', '400', '500', '600', '900'],
   style: ['italic', 'normal']
 });
+
+const courier_prime = Courier_Prime({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['italic', 'normal']
+});
+
+const medievalSharp = MedievalSharp({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal']
+})
 
 export const metadata = {
   title: "Della Porta Cipher",
@@ -30,10 +48,11 @@ export default function RootLayout({ children }) {
       <Wireframe/>
 
       <body 
-      className={`${jacquard.className} antialiased theme-dark`}
+      className={`antialiased theme-dark`}
       >
         <Header/>
         {children}
+        <Footer/>
         <SpeedInsights/>
       </body>
     </html>

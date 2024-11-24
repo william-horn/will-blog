@@ -6,7 +6,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './lib/util/*.js',
+    './lib/util/*.{js,jsx}',
   ],
   theme: {
     extend: {
@@ -43,6 +43,7 @@ module.exports = {
         "3": "var(--text-color-3)",
         "4": "var(--text-color-4)",
         "5": "var(--text-color-5)",
+        "6": "var(--text-color-6)",
         "0-muted": "var(--text-color-0-muted)",
         "0-error": "var(--text-color-0-error)",
         "0-hyperlink": "var(--text-color-0-hyperlink)",
@@ -59,6 +60,7 @@ module.exports = {
         "6": "var(--text-font-6)",
         "7": "var(--text-font-7)",
         "8": "var(--text-font-8)",
+        "9": "var(--text-font-9)",
       },
 
       animation: {
