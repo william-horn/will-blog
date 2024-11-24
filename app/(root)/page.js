@@ -61,7 +61,7 @@ const Home = () => {
     <Page className="p-4">
       <Content span="xs" className="flex flex-col mx-auto opacity-0 animate-fade-in-1">
         <Paragraph className="p-6 mb-10 rounded-md bg-0-inset">
-          <Paragraph.Text bold textSize="xl" className="italic font-light"><Highlight className="">"The Shifting Method"</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
+          <Paragraph.Text bold textSize="xl" className="italic font-light"><Highlight className="">&quot;The Shifting Method&quot;</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-16">
@@ -93,7 +93,7 @@ const Home = () => {
 
         <Paragraph className="mt-12">
           <Paragraph.Text className="font-medium">Notice how each row in the second half of the alphabet has their letters <Highlight>shifted to the left</Highlight>, by the same number corresponding to its <Highlight>row index.</Highlight> This will be important later on when we calculate which letter is in a given row, at a given position.</Paragraph.Text>
-          <Paragraph.Text className="font-medium">Before we get into that, let's think about what information we need to begin the conversion process.</Paragraph.Text>
+          <Paragraph.Text className="font-medium">Before we get into that, let&apos;s think about what information we need to begin the conversion process.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-12">
