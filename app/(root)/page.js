@@ -155,7 +155,7 @@ const Home = () => {
           <Paragraph.Text>
             So, going back to our code example before with 
             <CodeBlock>
-              "quick brown fox"
+              &quot;quick brown fox&quot;
              </CodeBlock>
             ...
           </Paragraph.Text>
