@@ -79,7 +79,7 @@ const Home = () => {
           <Paragraph className="mt-14">
             <div>
               <Paragraph.Text textSize="3xl" className="font-medium text-1 font-6">Della Porta Cipher Chart:</Paragraph.Text>
-              <div className="md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] w-[300px] h-[300px] relative">
+              <div className="md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] w-[60vw] h-[60vw] min-w-[300px] min-h-[300px] relative">
                 <Image
                   src="/table.webp"
                   fill
@@ -101,47 +101,130 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <ContentHeading id="implementation">The Set Up</ContentHeading>
+          <ContentHeading id="implementation">The Set Up - Data Formatting</ContentHeading>
         </Paragraph>
 
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">Since the encryption and decryption of our message depends on whatever <Highlight>keyword</Highlight> the user inputs, we must account for this first.</Paragraph.Text>
-          <Paragraph.Text className="font-medium">We know that each letter in the keyword maps <Highlight>one-to-one</Highlight> with each letter in our input message, and the keyword letters will repeat once they run out.</Paragraph.Text>
-          <Paragraph.Text>So, lets consider these values for example:</Paragraph.Text>
+          <Paragraph.Text className="font-medium">We know that each letter in the keyword maps <Highlight>one-to-one</Highlight> with each letter in our input message, and the <Highlight>keyword letters will repeat themselves</Highlight> if or when they run out.</Paragraph.Text>
         </Paragraph>
 
-        <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
+        <Paragraph className="mt-12">
+        <Paragraph.Text>So, lets assume we have this message to encrypt using this keyword:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="flex flex-col items-center p-5 mx-auto text-xl rounded-md bg-0-inset w-fit">
+            {
+              generateSyntaxHighlightedCode(`
+              String message = "the quick brown fox";
+
+              String keyword = "jumped";
+            `)
+            }
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>Each letter in our <CodeBlock>message</CodeBlock> string is like a <span className="">lost traveler&#8212;trying to find their way back home.</span> In this case, <Highlight>&quot;home&quot;</Highlight> is the <Highlight>encrypted</Highlight> or <Highlight>decrypted</Highlight> output letter.</Paragraph.Text>
+          <Paragraph.Text>So, how do our poor message letters find their way back home? Well, this is where the <CodeBlock>keyword</CodeBlock> letters come to the rescue. <Highlight>Each of our message letter</Highlight> friends will be <Highlight>paired with a keyword letter</Highlight> buddy to help guide them back home (to the proper output). This means we need to create some kind of <Highlight>function</Highlight> that ensures each message letter is paired with a keyword letter buddy. Let&apos;s call it <CodeBlock>getKeywordMessagePairs()</CodeBlock>, and it will look something like this:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="flex flex-col items-center p-5 mx-auto rounded-md lg:text-lg md:text-sm mt-14 bg-0-inset w-fit">
           {
             generateSyntaxHighlightedCode(`
-            String message = "the quick brown fox";
+            public static char[][] getKeywordMessagePairs(String message, String keyword) {
+              // *create a 2D array of letter pairs, spanning the length of the message
+              // *each row will have 2 columns: one for the message letter, the other for the keyword letter
+              char[][] letterPairs = char[message.length()][2];
+              
+              // the parsing process
+              ...
 
-            String keyword = "jumped";
+              // return the final letter mappings
+              return letterPairs;
+            }
           `)
           }
         </Paragraph>
 
+        <Paragraph id="data-output" className="mt-14">
+          <Paragraph.Text>The expected output of this function should look something like this:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
+          <div>
+            {
+              generateSyntaxHighlightedCode(`
+              { 't', 'j' },
+
+              { 'h', 'u' },
+
+              { 'e', 'm' },
+
+              { ' ', ' ' },
+
+              { 'q', 'p' },
+
+              { 'u', 'e' },
+
+              { 'i', 'd' },
+
+              { 'c', 'j' },
+
+              { 'k', 'u' },
+
+              ...
+            `)
+            }
+          </div>
+        </Paragraph>
+
+        
         <Paragraph className="mt-14">
-          <Paragraph.Text className="font-medium">The first place we have to look to begin encrypting <CodeBlock>message</CodeBlock> is under the <Highlight>key</Highlight> column of the cipher chart, so we can locate the row which will contain the corresponding message letter.</Paragraph.Text>
+          <Paragraph.Text>Where the first column in this 2D array holds our lost <Highlight>message letter</Highlight> friends, and the second column holds their corresponding <Highlight>keyword letter</Highlight> buddies, ready to guide them back home. Notice how once we ran out of keyword letters to pair with message letters, we just <Highlight>repeat</Highlight> the keyword letters from the beginning again. Also notice how the space character was paired with itself. This is because space characters, along with all other <Highlight>non-alphabet characters</Highlight>, are <Highlight>not included</Highlight> in this cipher algorithm. We want them to pass through the algorithm unchanged.</Paragraph.Text>
+          <Paragraph.Text>Now that our data is in a much easier format to read and understand, let&apos;s take a look how to use it.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-12">
+          <ContentHeading id="implementation">Finding the Row Index</ContentHeading>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text className="inline">To recap, the first step to decoding a Della Porta cipher is take a <Highlight>keyword letter</Highlight> and find where it exists in the <Highlight>Key</Highlight> column of the chart. Let&apos;s continue using our <Link href="#data-output" className="underline">previous data example</Link>, and take a look at the first pair: <Link href="#data-output"><CodeBlock>{"{'t', 'j'}"}</CodeBlock></Link></Paragraph.Text>
+          <Paragraph.Text className="italic">Remember: <CodeBlock>{`'t'`}</CodeBlock> is a letter in the message, and <CodeBlock>{`'j'`}</CodeBlock> is {"it's"} corresponding keyword letter buddy.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[541px] xl:h-[530px] lg:w-[450px] lg:h-[441px] md:w-[400px] md:h-[392px] w-[60vw] h-[59vw] min-w-[300px] min-h-[294px] relative">
+            <Image
+              src="/find-row.webp"
+              fill
+              alt=""
+            />
+          </div>
         </Paragraph>
       
-        <Paragraph className="mt-14">
-          <div className="xl:w-[730px] xl:h-[508px] lg:w-[510px] lg:h-[355px] w-[480px] h-[334px] relative">
+        {/* <Paragraph className="mt-14">
+          <div className="xl:w-[730px] xl:h-[508px] lg:w-[510px] lg:h-[355px] md:w-[480px] md:h-[334px] w-[400px] h-[278px] relative">
             <Image
               src="/table-row-1.png"
               fill
               alt=""
             />
           </div>
+        </Paragraph> */}
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text className="font-medium">In this case, our <Highlight>keyword letter</Highlight> is at the <Highlight>4th row index</Highlight> (starting from zero). But before going further, there is a small caveat that you may have already noticed: there are <Highlight>two</Highlight> letters in each <Highlight>Key</Highlight> column.</Paragraph.Text>
+          <Paragraph.Text>Here, we located the row <CodeBlock>{`I, J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
+          <Paragraph.Text>First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text className="font-medium">As you can see, our keyword letter <CodeBlock>&quot;j&quot;</CodeBlock> exists in the <Highlight>4th row</Highlight> of the <Highlight>key column</Highlight> (starting from <CodeBlock>0</CodeBlock>). You may also notice, starting from the first row with key letters <CodeBlock>A,B</CodeBlock> to our current row at <CodeBlock>I,J</CodeBlock>, our message letter <CodeBlock>&quot;t&quot;</CodeBlock> has <Highlight>shifted to the left</Highlight> by <Highlight>4 spaces.</Highlight></Paragraph.Text>
-        </Paragraph>
-
-        <Paragraph className="mt-14">
-          <div className="xl:w-[500px] xl:h-[250px] lg:w-[450px] lg:h-[225px] w-[400px] h-[200px] relative">
+          <div className="md:w-[600px] md:h-[222px] xl:w-[675px] xl:h-[250px]  w-[80vw] h-[30vw] min-w-[200px] min-h-[100px] relative">
             <Image
-              src="/shifting-4-places.png"
+              src="/finding-c.webp"
               fill
               alt=""
             />
@@ -149,42 +232,46 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>And of course, our output letter in this case is <CodeBlock>&quot;c&quot;</CodeBlock>, since it sits completely vertical to <CodeBlock>&quot;t&quot;</CodeBlock> in the <CodeBlock>I,J</CodeBlock> row.</Paragraph.Text>
-          <Paragraph.Text className="font-medium">At this point, we can see that it would be useful to create some kind of function that <Highlight>maps</Highlight> each letter in our <Highlight>keyword string</Highlight>, to each letter in our <Highlight>message string</Highlight>, since both together are needed to determine the output.</Paragraph.Text>
-          <Paragraph.Text>This isn&apos;t mandatory, but it will greatly strengthen the readability of our code and make it much easier to see what the algorithm is doing later on.</Paragraph.Text>
-          <Paragraph.Text>
-            So, going back to our code example before with 
-            <CodeBlock>
-              &quot;quick brown fox&quot;
-             </CodeBlock>
-            ...
-          </Paragraph.Text>
+          <Paragraph.Text>For simplicity, we will always assume all lowercase characters.</Paragraph.Text>
+          <Paragraph.Text className="font-medium">Since the rows fall in <Highlight>alphabetical</Highlight> order, the best way to determine the <Highlight>row index</Highlight> of <CodeBlock>{`'c'`}</CodeBlock> would be to find {`it's`} <Highlight>position</Highlight> in the alphabet. We can do this by getting the <Highlight>bytecode</Highlight> value of <CodeBlock>{`'a'`}</CodeBlock>&#8212;<CodeBlock>97</CodeBlock>&#8212;and subtracting that from the bytecode value of <CodeBlock>{`'c'`}</CodeBlock>&#8212;<CodeBlock>99</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>Doing this, we get <CodeBlock>99 - 97</CodeBlock> which gives us <CodeBlock>2</CodeBlock>. Lo and behold, that is the row index of <CodeBlock>{`'c'`}</CodeBlock> that we were looking for. In general, we would apply the formula: </Paragraph.Text>
+
+          <div className="my-10 text-xl">
+            {
+              generateSyntaxHighlightedCode(`
+              int rowIndex = keywordLetter - 'a';
+            `)
+            }
+          </div>
+
+          <Paragraph.Text>...assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
+          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into one <Highlight>row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be <Highlight>the same row index.</Highlight></Paragraph.Text>
+          <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
-          {
-            generateSyntaxHighlightedCode(`
-            { "t", "j" },
+          <p className="text-sm lg:text-lg md:text-md sm:text-sm">
+            {
+              generateSyntaxHighlightedCode(`
+              public static int getPortaRowIndexOf(String character) {
+                // convert character to bytecode
+                int characterByte = character;
 
-            { "h", "u" },
+                // get position of character in the alphabet
+                int position = characterByte - 'a';
 
-            { "e", "m" },
-
-            { " ", " " },
-
-            { "q", "p" },
-
-            { "u", "e" },
-
-            { "i", "d" },
-
-            { "c", "j" },
-
-            { "k", "u" },
-
-            ...
-          `)
-          }
+                // group two consecutive characters to the same index
+                // ex:
+                // getPortaRowIndexOf('a') -> 0
+                // getPortaRowIndexOf('b') -> 0
+                // getPortaRowIndexOf('c') -> 1
+                // getPortaRowIndexOf('d') -> 1
+                // ...
+                return Math.floor(position/2);
+              }
+            `)
+            }
+          </p>
         </Paragraph>
 
       </Content>

@@ -25,9 +25,10 @@ const ParagraphText = ({
 const Paragraph = ({
   children,
   className: importedClassName="",
+  ...rest
 }) => {
   return (
-    <Content span="full" className={twMerge("flex flex-col gap-5 justify-center items-center", importedClassName)}>
+    <Content span="full" className={twMerge("flex flex-col gap-5 justify-center items-center", importedClassName)} {...rest}>
       {children}
     </Content>
   );
