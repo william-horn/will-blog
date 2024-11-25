@@ -217,7 +217,7 @@ const Home = () => {
 
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">In this case, our <Highlight>keyword letter</Highlight> is at the <Highlight>4th row index</Highlight> (starting from zero). But before going further, there is a small caveat that you may have already noticed: there are <Highlight>two</Highlight> letters in each <Highlight>Key</Highlight> column.</Paragraph.Text>
-          <Paragraph.Text>Here, we located the row <CodeBlock>{`I, J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
+          <Paragraph.Text>Here, we located the row <CodeBlock>{`I, J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for the letter <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
           <Paragraph.Text>First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
         </Paragraph>
 
@@ -236,7 +236,7 @@ const Home = () => {
           <Paragraph.Text className="font-medium">Since the rows fall in <Highlight>alphabetical</Highlight> order, the best way to determine the <Highlight>row index</Highlight> of <CodeBlock>{`'c'`}</CodeBlock> would be to find {`it's`} <Highlight>position</Highlight> in the alphabet. We can do this by getting the <Highlight>bytecode</Highlight> value of <CodeBlock>{`'a'`}</CodeBlock>&#8212;<CodeBlock>97</CodeBlock>&#8212;and subtracting that from the bytecode value of <CodeBlock>{`'c'`}</CodeBlock>&#8212;<CodeBlock>99</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>Doing this, we get <CodeBlock>99 - 97</CodeBlock> which gives us <CodeBlock>2</CodeBlock>. Lo and behold, that is the row index of <CodeBlock>{`'c'`}</CodeBlock> that we were looking for. In general, we would apply the formula: </Paragraph.Text>
 
-          <div className="my-10 text-xl">
+          <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
               int rowIndex = keywordLetter - 'a';
@@ -245,7 +245,7 @@ const Home = () => {
           </div>
 
           <Paragraph.Text>...assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
-          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into one <Highlight>row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be <Highlight>the same row index.</Highlight></Paragraph.Text>
+          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be <Highlight>the same row index.</Highlight></Paragraph.Text>
           <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
 
@@ -274,6 +274,43 @@ const Home = () => {
           </p>
         </Paragraph>
 
+        <Paragraph className="mt-14">
+          <Paragraph.Text className="font-medium">Now that we can find the row index of our keyword letters, we can determine where our message letter <CodeBlock>{`'t'`}</CodeBlock> needs to start traveling in order to get home. {`Let's`} take a look it how he can get there.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-12">
+          <ContentHeading id="implementation">Finding the {`"Porta Compliment"`}</ContentHeading>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text className="font-medium">We will continue where we left off, looking at the first key/message pair that our <CodeBlock>getKeywordMessagePairs()</CodeBlock> method returned: <CodeBlock>{`{'t', 'j'}`}</CodeBlock>. Our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> is close to finding {`it's`} way home, but there is still more work to do.</Paragraph.Text>
+          <Paragraph.Text>Calling <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> tells us which road (row index) <CodeBlock>{`'t'`}</CodeBlock> needs to travel on, but not which <Highlight>direction</Highlight> to go in. {`Let's`} take a look at the chart again:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[541px] xl:h-[530px] lg:w-[450px] lg:h-[441px] md:w-[400px] md:h-[392px] w-[60vw] h-[59vw] min-w-[300px] min-h-[294px] relative">
+            <Image
+              src="/find-row.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text className="font-medium">The chart is split up into <Highlight>two halves</Highlight> of the alphabet: the <Highlight>first half</Highlight> is at the <Highlight>top</Highlight>, and the <Highlight>second half</Highlight> is all throughout the <Highlight>bottom</Highlight>.</Paragraph.Text>
+          <Paragraph.Text>This means that for any <Highlight>message letter</Highlight>, it will either be at the top of chart in the first half of the alphabet, or somewhere in the <Highlight>row</Highlight> of our keyword letter, in the second half of the alphabet. In our case, <CodeBlock>{`'t'`}</CodeBlock> is in the second half of the alphabet, which means we should see it in our keyword letter row, which we do.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[711px] xl:h-[204px] md:w-[600px] md:h-[172px] min-w-[200px] w-[80vw] h-[23vw] min-h-[57px] relative">
+            <Image
+              src="/finding-t.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
       </Content>
     </Page>
   );
