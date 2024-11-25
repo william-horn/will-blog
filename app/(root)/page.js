@@ -354,8 +354,8 @@ const Home = () => {
 
         <Paragraph className="mt-14">
           <Paragraph.Text>This is significant because if both the <Highlight>message letter</Highlight> and the <Highlight>compliment letter</Highlight> have the same <Highlight>relative row index</Highlight>, then we can use one to find the other. For instance, we know that <CodeBlock>{`'t'`}</CodeBlock> is at index <CodeBlock>2</CodeBlock> in {`it's`} row, so we can simply do <br></br><CodeBlock>{`'a' + 2`}</CodeBlock> (the equivalent of <CodeBlock>97 + 2</CodeBlock>) to calculate the <Highlight>bytecode</Highlight> for <CodeBlock>{`'c'`}</CodeBlock>.</Paragraph.Text>
-          <Paragraph.Text>So then the question becomes, how do we find the relative row index of <CodeBlock>{`'t'`}</CodeBlock>? Math.</Paragraph.Text>
-          <Paragraph.Text>As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number.</Highlight></Paragraph.Text>
+          <Paragraph.Text>So then the question becomes, how do we find the relative row index of <CodeBlock>{`'t'`}</CodeBlock>?</Paragraph.Text>
+          <Paragraph.Text>As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number </Highlight> from {`it's`} <Highlight>initial position</Highlight>.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -369,28 +369,36 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>We can use the <CodeBlock>A,B</CodeBlock> row as sort of a reference row, since this contains the <Highlight>initial positions</Highlight> of all the second-half alphabet characters.</Paragraph.Text>
-          <Paragraph.Text>Speaking of initial positions, <Highlight>what <span className="italic">is</span> the initial position</Highlight> of <CodeBlock>{`'t'`}</CodeBlock>, or any of them for that matter, in row <CodeBlock>A,B</CodeBlock>? How do we find them? Well, we could do something similar to what we did when trying to find the <Link href="#row-index" className="underline">row index for our keyword letters</Link>, by doing:</Paragraph.Text>
+          <Paragraph.Text>We can use the <CodeBlock>A,B</CodeBlock> row as sort of a reference for our <Highlight>second-half</Highlight> letters, since this row contains their <Highlight>initial positions</Highlight>&#8212;before any shifting has occurred. We will need to know these initial positions so we can determine the {`letter's`} <Highlight>new position</Highlight> later on as things get shifted around.</Paragraph.Text>
+          <Paragraph.Text>To do this, we could start by determining how <Highlight>far away</Highlight> from <CodeBlock>{`'z'`}</CodeBlock> each letter is. We would represent this as a <Highlight>positive</Highlight> number, for example: <CodeBlock>{`'x'`}</CodeBlock> would be a distance of <CodeBlock>2</CodeBlock> away from <CodeBlock>{`'z'`}</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock> it would be <CodeBlock>6</CodeBlock>:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[700px] xl:h-[287px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
+            <Image
+              src="/t-from-z.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>But remember, {`we're`} trying to find the <Highlight>relative row index</Highlight> of a letter starting from the <Highlight>beginning</Highlight> of the row, not the end of it. To account for this, we will <Highlight>subtract</Highlight> our {`letter's`} distance from <CodeBlock>{`'z'`}</CodeBlock>, which is <CodeBlock>6</CodeBlock> in this case, from <CodeBlock>12</CodeBlock>&#8212;the length of the row&#8212;to get the remaining row space. Therefore, our letter <CodeBlock>{`'t'`}</CodeBlock> is at an initial row index of <CodeBlock>12 - 6</CodeBlock>, which is <CodeBlock>6</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>So in general, we can find the <Highlight>relative row index</Highlight> of a letter in the row <CodeBlock>A,B</CodeBlock> by doing:</Paragraph.Text>
 
           <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int initial_row_position = messageLetter - 'n';
+              int initial_position = 12 - 'z' - messageLetter
             `)
             }
           </div>
 
-          <Paragraph.Text>This time we would be subtracting the <Highlight>bytecode</Highlight> value of <CodeBlock>{`'n'`}</CodeBlock> instead of <CodeBlock>{`'a'`}</CodeBlock>, since the row starts at <CodeBlock>{`'n'`}</CodeBlock>. If we substituted <CodeBlock>{`'t'`}</CodeBlock> in for <CodeBlock>messageLetter</CodeBlock>, this would result in</Paragraph.Text>
-
-          <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
-            {
-              generateSyntaxHighlightedCode(`
-              int initial_row_position = 't' - 'n';
-            `)
-            }
-          </div>
-
-          <Paragraph.Text>which gives us a value of <CodeBlock>6</CodeBlock>&#8212;the correct index of <CodeBlock>{`'t'`}</CodeBlock> in the <CodeBlock>A,B</CodeBlock> row. So we <span className="italic">could</span> do this and make it work, but there is one slight annoyance.</Paragraph.Text>
+          <Paragraph.Text>You may be asking: <span className="italic">{'"'}why not just do <CodeBlock>messageLetter - 'n'</CodeBlock>?{'"'}</span></Paragraph.Text>
+          <Paragraph.Text>And you could do this! However, it will make the math in the next few steps a bit more annoying. When we get there, {`we'll`} see why.</Paragraph.Text>
+          <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or relative row index) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position.</Paragraph.Text>
         </Paragraph>
 
       </Content>
