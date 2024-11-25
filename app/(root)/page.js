@@ -218,7 +218,7 @@ const Home = () => {
 
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">In this case, our <Highlight>keyword letter</Highlight> is at the <Highlight>4th row index</Highlight> (starting from zero). But before going further, there is a small caveat that you may have already noticed: there are <Highlight>two</Highlight> letters in each <Highlight>Key</Highlight> column.</Paragraph.Text>
-          <Paragraph.Text>Here, we located the row <CodeBlock>{`I, J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for the letter <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
+          <Paragraph.Text>Here, we located the row <CodeBlock>{`I,J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for the letter <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
           <Paragraph.Text>First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
         </Paragraph>
 
