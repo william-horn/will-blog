@@ -26,9 +26,10 @@ const Highlight = ({
 
 const ContentHeading = ({
   children,
+  className: importedClassName,
   ...rest
 }) => {
-  return <Heading className="text-1 font-6" textSize="7xl" {...rest}>
+  return <Heading className={twMerge("text-1 font-6", importedClassName)} textSize="7xl" {...rest}>
     {children}
   </Heading>
 }
@@ -101,7 +102,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <ContentHeading id="implementation">The Set Up - Data Formatting</ContentHeading>
+          <ContentHeading id="set-up">The Set Up - Data Formatting</ContentHeading>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -187,7 +188,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <ContentHeading id="implementation">Finding the Row Index</ContentHeading>
+          <ContentHeading id="row-index">Finding the Row Index</ContentHeading>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -239,13 +240,13 @@ const Home = () => {
           <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int rowIndex = keywordLetter - 'a';
+              int row_index = keywordLetter - 'a';
             `)
             }
           </div>
 
           <Paragraph.Text>...assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
-          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be <Highlight>the same row index.</Highlight></Paragraph.Text>
+          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
           <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
 
@@ -275,16 +276,16 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text className="font-medium">Now that we can find the row index of our keyword letters, we can determine where our message letter <CodeBlock>{`'t'`}</CodeBlock> needs to start traveling in order to get home. {`Let's`} take a look it how he can get there.</Paragraph.Text>
+          <Paragraph.Text className="font-medium">Now that we can find the row index of our keyword letters, we can determine where our message letter <CodeBlock>{`'t'`}</CodeBlock> needs to start traveling in order to get home. {`Let's`} take a look at how he can get there.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <ContentHeading id="implementation">Finding the {`"Porta Compliment"`}</ContentHeading>
+          <ContentHeading id="porta-compliment">Finding the {`"Porta Compliment"`}</ContentHeading>
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text className="font-medium">We will continue where we left off, looking at the first key/message pair that our <CodeBlock>getKeywordMessagePairs()</CodeBlock> method returned: <CodeBlock>{`{'t', 'j'}`}</CodeBlock>. Our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> is close to finding {`it's`} way home, but there is still more work to do.</Paragraph.Text>
-          <Paragraph.Text>Calling <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> tells us which road (row index) <CodeBlock>{`'t'`}</CodeBlock> needs to travel on, but not which <Highlight>direction</Highlight> to go in. {`Let's`} take a look at the chart again:</Paragraph.Text>
+          <Paragraph.Text className="font-medium">We will continue where we left off, looking at the first message/keyword pair from our example output: <CodeBlock>{`{'t', 'j'}`}</CodeBlock>. Our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> is close to finding {`it's`} way home, but there is still more work to do.</Paragraph.Text>
+          <Paragraph.Text>Calling <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> tells us which road (or row index) <CodeBlock>{`'t'`}</CodeBlock> needs to travel on, but not which <Highlight>direction</Highlight> to go in. {`Let's`} take a look at the chart again:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -299,7 +300,16 @@ const Home = () => {
 
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">The chart is split up into <Highlight>two halves</Highlight> of the alphabet: the <Highlight>first half</Highlight> is at the <Highlight>top</Highlight>, and the <Highlight>second half</Highlight> is all throughout the <Highlight>bottom</Highlight>.</Paragraph.Text>
-          <Paragraph.Text>This means that for any <Highlight>message letter</Highlight>, it will either be at the top of chart in the first half of the alphabet, or somewhere in the <Highlight>row</Highlight> of our keyword letter, in the second half of the alphabet. In our case, <CodeBlock>{`'t'`}</CodeBlock> is in the second half of the alphabet, which means we should see it in our keyword letter row, which we do.</Paragraph.Text>
+          <Paragraph.Text>This means that for any <Highlight>message letter</Highlight>, it will either be at the top of chart in the first half of the alphabet, or somewhere in the <Highlight>row</Highlight> of our keyword letter, in the second half of the alphabet.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-12">
+          <Heading id="case-1" className="text-4xl text-white font-9">Case 1: Message Letter in Second Half</Heading>
+        </Paragraph>
+
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>In our case, <CodeBlock>{`'t'`}</CodeBlock> is in the second half of the alphabet, which means we should see it in our keyword letter row, which we do.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -311,6 +321,78 @@ const Home = () => {
             />
           </div>
         </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>This now tells <CodeBlock>{`'t'`}</CodeBlock> which direction it needs to travel in order to get home. When the <Highlight>message letter</Highlight> is in the <Highlight>second half</Highlight> of the alphabet, the <Highlight>output</Highlight> (or <Highlight>compliment</Highlight>) character will reside in the <Highlight>first half</Highlight> of the alphabet&#8212;vertically aligned with the message letter.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[720px] xl:h-[337px] md:w-[600px] md:h-[281px] min-w-[200px] w-[80vw] h-[37vw] min-h-[94px] relative">
+            <Image
+              src="/finding-c-from-t.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>So, the Porta compliment of <CodeBlock>{`'t'`}</CodeBlock> when paired with a keyword letter of <CodeBlock>{`'j'`}</CodeBlock>, is <CodeBlock>{`'c'`}</CodeBlock>. If we can do this for every letter in the message string, then we will have fully encrypted or decrypted our text. Now, <Highlight>how do we code this?</Highlight></Paragraph.Text>
+          <Paragraph.Text>Remember, this is still just <Highlight>case 1</Highlight>: when the <Highlight>message letter</Highlight> is in the second half of the alphabet. So, for this explanation we will assume all message letters are in the second half.</Paragraph.Text>
+          <Paragraph.Text>{`Let's`} take a look at the information we have so far, and how we can use that to calculate our answer of <CodeBlock>{`'c'`}</CodeBlock>. The first thing to notice is our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <Highlight>compliment letter</Highlight> <CodeBlock>{`'c'`}</CodeBlock> have the same index relative to the row their in.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[750px] xl:h-[278px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
+            <Image
+              src="/row-relationship.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>This is significant because if both the <Highlight>message letter</Highlight> and the <Highlight>compliment letter</Highlight> have the same <Highlight>relative row index</Highlight>, then we can use one to find the other. For instance, we know that <CodeBlock>{`'t'`}</CodeBlock> is at index <CodeBlock>2</CodeBlock> in {`it's`} row, so we can simply do <br></br><CodeBlock>{`'a' + 2`}</CodeBlock> (the equivalent of <CodeBlock>97 + 2</CodeBlock>) to calculate the <Highlight>bytecode</Highlight> for <CodeBlock>{`'c'`}</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>So then the question becomes, how do we find the relative row index of <CodeBlock>{`'t'`}</CodeBlock>? Math.</Paragraph.Text>
+          <Paragraph.Text>As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number.</Highlight></Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="xl:w-[700px] xl:h-[329px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
+            <Image
+              src="/shift-counting.webp"
+              fill
+              alt=""
+            />
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>We can use the <CodeBlock>A,B</CodeBlock> row as sort of a reference row, since this contains the <Highlight>initial positions</Highlight> of all the second-half alphabet characters.</Paragraph.Text>
+          <Paragraph.Text>Speaking of initial positions, <Highlight>what <span className="italic">is</span> the initial position</Highlight> of <CodeBlock>{`'t'`}</CodeBlock>, or any of them for that matter, in row <CodeBlock>A,B</CodeBlock>? How do we find them? Well, we could do something similar to what we did when trying to find the <Link href="#row-index" className="underline">row index for our keyword letters</Link>, by doing:</Paragraph.Text>
+
+          <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
+            {
+              generateSyntaxHighlightedCode(`
+              int initial_row_position = messageLetter - 'n';
+            `)
+            }
+          </div>
+
+          <Paragraph.Text>This time we would be subtracting the <Highlight>bytecode</Highlight> value of <CodeBlock>{`'n'`}</CodeBlock> instead of <CodeBlock>{`'a'`}</CodeBlock>, since the row starts at <CodeBlock>{`'n'`}</CodeBlock>. If we substituted <CodeBlock>{`'t'`}</CodeBlock> in for <CodeBlock>messageLetter</CodeBlock>, this would result in</Paragraph.Text>
+
+          <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
+            {
+              generateSyntaxHighlightedCode(`
+              int initial_row_position = 't' - 'n';
+            `)
+            }
+          </div>
+
+          <Paragraph.Text>which gives us a value of <CodeBlock>6</CodeBlock>&#8212;the correct index of <CodeBlock>{`'t'`}</CodeBlock> in the <CodeBlock>A,B</CodeBlock> row. So we <span className="italic">could</span> do this and make it work, but there is one slight annoyance.</Paragraph.Text>
+        </Paragraph>
+
       </Content>
     </Page>
   );
