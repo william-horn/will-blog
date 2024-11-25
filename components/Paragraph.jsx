@@ -8,14 +8,16 @@ import React from 'react';
 
 const ParagraphText = ({
   bold,
-  textSize="xl",
+  textSize="lg",
   children,
   className: importedClassName="",
+  ...rest
 }) => {
   return (
     <Text 
     textSize={textSize}
     className={twMerge(`font-medium text-center`, importedClassName)}
+    {...rest}
     >
       {children}
     </Text>
