@@ -61,7 +61,7 @@ const Home = () => {
 
   return (
     <Page className="p-4">
-      <Content span="xs" className="flex flex-col mx-auto">
+      <Content span="sm" className="flex flex-col mx-auto">
         <div className="opacity-0 animate-fade-in-1">
           <Paragraph className="p-6 mb-10 rounded-md bg-0-inset">
             <Paragraph.Text bold textSize="xl" className="italic font-light"><Highlight className="">&quot;The Shifting Method&quot;</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
@@ -391,14 +391,27 @@ const Home = () => {
           <div className="p-5 my-10 text-xl rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int initial_position = 12 - 'z' - messageLetter
+              int initial_position = 12 - ('z' - messageLetter)
             `)
             }
           </div>
 
-          <Paragraph.Text>You may be asking: <span className="italic">&lsquo;why not just do <CodeBlock>messageLetter - {`'n'`}</CodeBlock>?&lsquo;</span></Paragraph.Text>
+          <Paragraph.Text>You may be asking: <span className="italic">{'"'}why not just do <span className="not-italic"><CodeBlock>messageLetter - {`'n'`}</CodeBlock>?</span>{'"'}</span></Paragraph.Text>
           <Paragraph.Text>And you could do this! However, it will make the math in the next few steps a bit more annoying. When we get there, {`we'll`} see why.</Paragraph.Text>
           <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or relative row index) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position.</Paragraph.Text>
+          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times. So, we want to add that distance to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> before subtracting it from <CodeBlock>12</CodeBlock></Paragraph.Text>
+
+          <div className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-xl md:text-md sm:text-sm">
+            {
+              generateSyntaxHighlightedCode(`
+              // get the row index
+              int rowIndex = getPortaRowIndexOf('j');
+
+              // calculate the final relative row index
+              int initial_position = 12 - ('z' - messageLetter + rowIndex)
+            `)
+            }
+          </div>
         </Paragraph>
 
       </Content>
