@@ -396,7 +396,7 @@ const Home = () => {
             }
           </div>
 
-          <Paragraph.Text>You may be asking: <span className="italic">{'"'}why not just do <CodeBlock>messageLetter - 'n'</CodeBlock>?{'"'}</span></Paragraph.Text>
+          <Paragraph.Text>You may be asking: <span className="italic">&lsquo;why not just do <CodeBlock>messageLetter - 'n'</CodeBlock>?&lsquo;</span></Paragraph.Text>
           <Paragraph.Text>And you could do this! However, it will make the math in the next few steps a bit more annoying. When we get there, {`we'll`} see why.</Paragraph.Text>
           <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or relative row index) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position.</Paragraph.Text>
         </Paragraph>
