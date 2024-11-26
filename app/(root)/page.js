@@ -115,7 +115,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="flex flex-col items-center p-5 mx-auto rounded-md bg-0-inset w-fit text-lg">
+          <div className="flex flex-col items-center p-5 mx-auto rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
               String message = "the quick brown fox";
@@ -132,7 +132,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto rounded-md mt-14 bg-0-inset w-fit">
-          <div className="lg:text-lg text-sm">
+          <div className="lg:text-base md:text-sm text-xs">
             {
               generateSyntaxHighlightedCode(`
               public static char[][] getKeywordMessagePairs(String message, String keyword) {
@@ -156,7 +156,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
-          <div className="lg:text-lg text-sm">
+          <div className="lg:text-base text-sm">
             {
               generateSyntaxHighlightedCode(`
               { 't', 'j' },
@@ -240,10 +240,10 @@ const Home = () => {
           <Paragraph.Text className="font-medium">Since the rows fall in <Highlight>alphabetical</Highlight> order, the best way to determine the <Highlight>row index</Highlight> of <CodeBlock>{`'c'`}</CodeBlock> would be to find {`it's`} <Highlight>position</Highlight> in the alphabet. We can do this by getting the <Highlight>ASCII</Highlight> value of <CodeBlock>{`'a'`}</CodeBlock>&#8212;<CodeBlock>97</CodeBlock>&#8212;and subtracting that from the ASCII value of <CodeBlock>{`'c'`}</CodeBlock>&#8212;<CodeBlock>99</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>Doing this, we get <CodeBlock>99 - 97</CodeBlock> which gives us <CodeBlock>2</CodeBlock>. Lo and behold, that is the row index of <CodeBlock>{`'c'`}</CodeBlock> that we were looking for. In general, we would apply the formula: </Paragraph.Text>
 
-          <div className="p-5 my-10 text-lg rounded-md bg-0-inset w-fit">
+          <div className="p-5 my-10 text-base rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int row_index = keywordLetter - 'a';
+              int rowIndex = keywordLetter - 'a';
             `)
             }
           </div>
@@ -254,7 +254,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
-          <p className="text-sm lg:text-lg md:text-md sm:text-sm">
+          <p className="md:text-base sm:text-sm text-xs">
             {
               generateSyntaxHighlightedCode(`
               public static int getPortaRowIndexOf(String character) {
@@ -391,10 +391,10 @@ const Home = () => {
           <Paragraph.Text>But remember, {`we're`} trying to find the <Highlight>relative row index</Highlight> of a letter starting from the <Highlight>beginning</Highlight> of the row, not the end of it. To account for this, we will <Highlight>subtract</Highlight> our {`letter's`} distance from <CodeBlock>{`'z'`}</CodeBlock>, which is <CodeBlock>6</CodeBlock> in this case, from <CodeBlock>12</CodeBlock>&#8212;the length of the row&#8212;to get the remaining row space. Therefore, our letter <CodeBlock>{`'t'`}</CodeBlock> is at an initial row index of <CodeBlock>12 - 6</CodeBlock>, which is <CodeBlock>6</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>So in general, we can find the <Highlight>relative row index</Highlight> of a letter in the row <CodeBlock>A,B</CodeBlock> by doing:</Paragraph.Text>
 
-          <div className="p-5 my-10 text-lg rounded-md bg-0-inset w-fit">
+          <div className="p-5 my-10 text-base rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int initial_position = 12 - ('z' - messageLetter);
+              int initialPosition = 12 - ('z' - messageLetter);
             `)
             }
           </div>
@@ -402,35 +402,36 @@ const Home = () => {
           <Paragraph.Text>You may be asking: <span className="italic">{'"'}why not just do <span className="not-italic"><CodeBlock>messageLetter - {`'n'`}</CodeBlock>?</span>{'"'}</span></Paragraph.Text>
           <Paragraph.Text>And you could do this! However, it will make the math in the next few steps a bit more annoying. When we get there, {`we'll`} see why.</Paragraph.Text>
           <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or <Highlight>relative row index</Highlight>) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position in the other rows.</Paragraph.Text>
-          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times to the <Highlight>left</Highlight>. So, we want to add that number to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> <Highlight>before</Highlight> subtracting it from <CodeBlock>12</CodeBlock>, because it has shifted that many more <Highlight>additional</Highlight> times.</Paragraph.Text>
+          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times to the <Highlight>left</Highlight>. So, we want to add that number to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> <Highlight>before</Highlight> subtracting it from <CodeBlock>12</CodeBlock>, because it has shifted that many more <Highlight>additional</Highlight> times. Now that we are using both our keyword letter and message letter together, {`let's`} start creating the <Highlight>method</Highlight> that will return their <Highlight>porta compliment</Highlight>:</Paragraph.Text>
+
+          <p className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs text-xs">
+            {
+              generateSyntaxHighlightedCode(`
+              public static int getPortaCompliment(char messageLetter, char keywordLetter) {
+                // get the row index from our keyword letter
+                int rowIndex = getPortaRowIndexOf(keywordLetter);
+
+                // calculate the final relative row index
+                int initialPosition = 12 - ('z' - messageLetter + rowIndex);
+
+                // for now, return the position of the porta compliment in the row
+                return initialPosition;
+              }
+            `)
+            }
+          </p>
+
+          <Paragraph.Text>For now, this method is only returning the <Highlight>position</Highlight> of the <Highlight>porta compliment</Highlight> in {`it's`} row. So, if we call <CodeBlock>{`getPortaCompliment('t', 'j')`}</CodeBlock>, we should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link>.</Paragraph.Text>
 
           <div className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-lg md:text-md sm:text-sm">
             {
               generateSyntaxHighlightedCode(`
-              // get the row index from our keyword letter
-              int row_index = getPortaRowIndexOf(keywordLetter);
-
-              // calculate the final relative row index
-              int initial_position = 12 - ('z' - messageLetter + row_index);
+              getPortaComplimentOf('t', 'j')
             `)
             }
           </div>
 
-          <Paragraph.Text>So, {`let's`} <Highlight>substitute</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <CodeBlock>{`'j'`}</CodeBlock> into this formula. We should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link></Paragraph.Text>
-
-          <div className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-lg md:text-md sm:text-sm">
-            {
-              generateSyntaxHighlightedCode(`
-              // the row index of 'j' is still 4
-              int row_index = getPortaRowIndexOf('j');
-
-              // calculate the final relative row index
-              int initial_position = 12 - ('z' - 't' + row_index);
-            `)
-            }
-          </div>
-
-          <Paragraph.Text>After the <Highlight>substitutions</Highlight> and replacing the characters with their <Highlight>ASCII</Highlight> values, the expression becomes <CodeBlock>{`12 - (122 - 116 + 4)`}</CodeBlock>, which indeed gives us the value of <CodeBlock>2</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>After <Highlight>substituting</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <CodeBlock>{`'j'`}</CodeBlock> in the body of the method, the final expression becomes <CodeBlock>{`12 - (122 - 116 + 4)`}</CodeBlock>, which indeed gives us the value of <CodeBlock>2</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>While this is the correct value in this case, it {`won't`} be in every case. You may have noticed, as the <Highlight>second-half</Highlight> letters are <Highlight>shifting to the left</Highlight> in each descending row, they <Highlight>snap back</Highlight> to the <Highlight>end of the row</Highlight> once they try shifting beyond the <Highlight>first position.</Highlight></Paragraph.Text>
         </Paragraph>
 
@@ -452,10 +453,10 @@ const Home = () => {
             {
               generateSyntaxHighlightedCode(`
               // the row index of 'j' is still 4
-              int row_index = getPortaRowIndexOf('j');
+              int rowIndex = getPortaRowIndexOf('j');
 
               // calculate the final relative row index
-              int final_position = 12 - ('z' - 't' + row_index)%13;
+              int finalPosition = 12 - ('z' - 't' + rowIndex)%13;
             `)
             }
           </div>
