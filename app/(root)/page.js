@@ -459,8 +459,17 @@ const Home = () => {
           </div>
         </Paragraph>
 
-        <Paragraph>
-          <Paragraph.Text>Test</Paragraph.Text>
+        <Paragraph className="my-14">
+          <Paragraph.Text className="text-center">Try it out yourself!</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph id="online-java-compiler">
+          <iframe
+          frameBorder="0"
+          height="450px"  
+          src="https://onecompiler.com/embed/java?theme=dark" 
+          width="100%"
+          ></iframe>
         </Paragraph>
 
       </Content>

@@ -17,6 +17,7 @@ import {
 
 import Header from "./Header";
 import Footer from "./Footer";
+import { twMerge } from "tailwind-merge";
 
 const jacquard_24 = Jacquard_24({
   subsets: ['latin'],
@@ -50,7 +51,9 @@ export const metadata = {
 const NavLink = ({
   children,
   href="",
-  type="normal"
+  type="normal",
+  justify="text-left",
+  className: importedClassName="",
 }) => {
   const config = {
     heading: {
@@ -68,9 +71,9 @@ const NavLink = ({
 
   const style = config[type];
 
-  return <Link href={href} className="flex items-center gap-2">
+  return <Link href={href} className={`flex items-center gap-2`}>
     <span className={`rounded-[50%] ${style.bulletSize} bg-white`}></span>
-    <Heading className={`hover:underline text-left ${style.textColor} ${style.fontStyle}`}>{children}</Heading>
+    <Heading className={twMerge(`hover:underline ${justify} ${style.textColor} ${style.fontStyle}`, importedClassName)}>{children}</Heading>
   </Link>
 }
 
@@ -84,10 +87,10 @@ export default function RootLayout({ children }) {
       >
         <div className="flex flex-row justify-center">
 
-          <div className="w-[18rem] mr-[2rem] xl:block hidden">
-            <div className="w-[18rem] h-[100vh] sticky top-2">
+          <div className="w-[18rem] xl:block hidden">
+            <div className="w-[18rem] h-[100vh] sticky top-3">
               <div className="table-of-contents-header">
-                <Heading textSize="xl" className="my-3 text-0">Table of Contents</Heading>
+                <Heading textSize="xl" className="mb-3 text-0">Table of Contents</Heading>
               </div>
 
               <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
@@ -156,23 +159,38 @@ export default function RootLayout({ children }) {
             {children}
           </div>
 
-          <div className="w-[18rem] mr-[2rem] shadow-lgk ml-[2rem] xl:block hidden">
-            <div className=" w-[18rem] h-[100vh] sticky top-2">
+          <div className="w-[18rem] xl:block hidden">
+            <div className=" w-[18rem] h-[100vh] sticky top-3">
               <div className="table-of-contents-header">
-                <Heading textSize="xl" className="my-3 text-0">Sources and Technologies Used:</Heading>
+                <Heading textSize="xl" className="mb-3 text-0">Sources and Citations:</Heading>
+              </div>
+
+              <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
+                
+              <div>
+                <ul className="">
+                  <li className="mx-auto w-fit">
+                    <NavLink className="underline text-cyan-300" href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta">Della Porta cipher article</NavLink>
+                  </li>
+                  <li className="mx-auto w-fit">
+                    <NavLink className="underline text-cyan-300" href="https://nonvalet.com/posts/20210413_java_console_colors/#:~:text=To%20change%20terminal%20colors%2C%20you,names%20for%20better%20code%20readability">Console Colors</NavLink>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 table-of-contents-header">
+                <Heading textSize="xl" className="text-0">Other Tools:</Heading>
               </div>
 
               <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
 
               <div>
-                
+                <ul className="">
+                  <li className="mx-auto w-fit">
+                    <NavLink className="" href="#online-java-compiler">Online Java Compiler</NavLink>
+                  </li>
+                </ul>
               </div>
-              {/* <iframe
-              frameBorder="0"
-              height="450px"  
-              src="https://onecompiler.com/embed/java?theme=dark" 
-              width="100%"
-              ></iframe> */}
             </div>
           </div>
         </div>
