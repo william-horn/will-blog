@@ -245,7 +245,7 @@ const Home = () => {
             }
           </div>
 
-          <Paragraph.Text>...assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
+          <Paragraph.Text>assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
           <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
           <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
