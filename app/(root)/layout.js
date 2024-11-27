@@ -50,9 +50,18 @@ export default function RootLayout({ children }) {
       <body 
       className={`antialiased theme-dark`}
       >
-        <Header/>
-        {children}
-        <Footer/>
+        <div className="flex flex-row">
+
+          {/* <div className="w-[200px] h-[100vh] bg-blue-400 min-w-[150px] fixed">
+
+          </div> */}
+
+          <div className="flex-1">
+            <Header/>
+            {children}
+            <Footer/>
+          </div>
+        </div>
         <SpeedInsights/>
       </body>
     </html>

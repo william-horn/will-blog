@@ -91,10 +91,8 @@ export const generateSyntaxHighlightedCode = source => {
   return <span className="font-mono code-theme-0">
     {
       parsedCode.map((parsedLine, lineIndex) => {
-        return <span key={lineIndex} className="flex code-line">
-          <span>
-            <span style={{whiteSpace: "pre"}}>{"\t".repeat(parsedLine.tabIndex)}</span>
-          </span>
+        return <span key={lineIndex} className="flex flex-row code-line">
+          <span style={{whiteSpace: "pre"}}>{"\t".repeat(parsedLine.tabIndex)}</span>
           <span>
             {
               parsedLine.line.map((tokenData, tokenIndex) => { 
