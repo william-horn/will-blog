@@ -16,7 +16,7 @@ const ParagraphText = ({
   return (
     <Text 
     textSize={textSize}
-    className={twMerge(`font-medium text-center`, importedClassName)}
+    className={twMerge(`font-medium w-full`, importedClassName)}
     {...rest}
     >
       {children}

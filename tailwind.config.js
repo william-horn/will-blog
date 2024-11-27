@@ -24,6 +24,7 @@ module.exports = {
         "0-inset": "var(--bg-color-0-inset)",
         "1": "var(--bg-color-1)",
         "1-inset": "var(--bg-color-1-inset)",
+        "2": "var(--bg-color-2)",
 
         // Dividing lines
         "0-line": "var(--bg-color-0-line)",

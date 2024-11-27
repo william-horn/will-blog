@@ -61,10 +61,10 @@ const Home = () => {
 
   return (
     <Page className="p-4">
-      <Content span="sm" className="flex flex-col mx-auto">
+      <Content span="" className="flex flex-col mx-auto xl:w-[95%] w-full lg:w-[55%] md:w-[70%] sm:w-[80%]">
         <div className="opacity-0 animate-fade-in-1">
           <Paragraph className="p-6 mb-10 rounded-md bg-0-inset">
-            <Paragraph.Text bold textSize="lg" className="italic font-light"><Highlight className="">&quot;The Shifting Method&quot;</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
+            <Paragraph.Text bold textSize="lg" className="italic font-light text-center text-white"><Highlight className="">&quot;The Shifting Method&quot;</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
           </Paragraph>
 
           <Paragraph className="mt-16">
@@ -79,7 +79,7 @@ const Home = () => {
 
           <Paragraph className="mt-14">
             <div>
-              <Paragraph.Text textSize="3xl" className="font-medium text-1 font-6">Della Porta Cipher Chart:</Paragraph.Text>
+              <Paragraph.Text textSize="3xl" className="font-medium text-center text-1 font-6">Della Porta Cipher Chart:</Paragraph.Text>
               <div className="md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] w-[60vw] h-[60vw] min-w-[300px] min-h-[300px] relative">
                 <Image
                   src="/table.webp"
@@ -108,10 +108,7 @@ const Home = () => {
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">Since the encryption and decryption of our message depends on whatever <Highlight>keyword</Highlight> the user inputs, we must account for this first.</Paragraph.Text>
           <Paragraph.Text className="font-medium">We know that each letter in the keyword maps <Highlight>one-to-one</Highlight> with each letter in our input message, and the <Highlight>keyword letters will repeat themselves</Highlight> if or when they run out.</Paragraph.Text>
-        </Paragraph>
-
-        <Paragraph className="mt-12">
-        <Paragraph.Text>So, lets assume we have this message to encrypt using this keyword:</Paragraph.Text>
+          <Paragraph.Text>So, lets assume we have this message to encrypt using this keyword:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -132,7 +129,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto rounded-md mt-14 bg-0-inset w-fit">
-          <div className="lg:text-base md:text-sm text-xs">
+          <div className="text-xs lg:text-base md:text-sm">
             {
               generateSyntaxHighlightedCode(`
               public static char[][] getKeywordMessagePairs(String message, String keyword) {
@@ -156,7 +153,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
-          <div className="lg:text-base text-sm">
+          <div className="text-sm lg:text-base">
             {
               generateSyntaxHighlightedCode(`
               { 't', 'j' },
@@ -222,7 +219,7 @@ const Home = () => {
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">In this case, our <Highlight>keyword letter</Highlight> is at the <Highlight>4th row index</Highlight> (starting from zero). But before going further, there is a small caveat that you may have already noticed: there are <Highlight>two</Highlight> letters in each <Highlight>Key</Highlight> column.</Paragraph.Text>
           <Paragraph.Text>Here, we located the row <CodeBlock>{`I,J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for the letter <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
-          <Paragraph.Text>First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
+          <Paragraph.Text id="single-letter-row">First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -249,12 +246,12 @@ const Home = () => {
           </div>
 
           <Paragraph.Text>assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
-          <Paragraph.Text>We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
+          <Paragraph.Text id="multi-letter-row">We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
           <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="flex flex-col items-center p-5 mx-auto text-xl rounded-md mt-14 bg-0-inset w-fit">
-          <p className="md:text-base sm:text-sm text-xs">
+          <p className="text-xs md:text-base sm:text-sm">
             {
               generateSyntaxHighlightedCode(`
               public static int getPortaRowIndexOf(String character) {
@@ -307,7 +304,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <Heading id="case-1" className="text-4xl text-white font-9 leading-relaxed">Case 1: Message Letter in Second Half</Heading>
+          <Heading id="case-1" className="text-4xl leading-relaxed text-white font-9">Case 1: Message Letter in Second Half</Heading>
         </Paragraph>
 
 
@@ -358,7 +355,7 @@ const Home = () => {
         <Paragraph className="mt-14">
           <Paragraph.Text id="t-equals-2">This is significant because if both the <Highlight>message letter</Highlight> and the <Highlight>compliment letter</Highlight> have the same <Highlight>relative row index</Highlight>, then we can use one to find the other. For instance, we know that <CodeBlock>{`'t'`}</CodeBlock> is at index <CodeBlock>2</CodeBlock> in {`it's`} row, so we can simply do <br></br><CodeBlock>{`'a' + 2`}</CodeBlock> (the equivalent of <CodeBlock>97 + 2</CodeBlock>) to calculate the <Highlight>ASCII</Highlight> for <CodeBlock>{`'c'`}</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>So then the question becomes, how do we find the relative row index of <CodeBlock>{`'t'`}</CodeBlock>?</Paragraph.Text>
-          <Paragraph.Text>As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number </Highlight> from {`it's`} <Highlight>initial position</Highlight>.</Paragraph.Text>
+          <Paragraph.Text id="initial-position">As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number </Highlight> from {`it's`} <Highlight>initial position</Highlight>.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -377,7 +374,7 @@ const Home = () => {
           <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock> it would be <CodeBlock>6</CodeBlock>:</Paragraph.Text>
         </Paragraph>
 
-        <Paragraph className="mt-14">
+        <Paragraph id="relative-row-index" className="mt-14">
           <div className="xl:w-[700px] xl:h-[287px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
             <Image
               src="/t-from-z.webp"
@@ -404,7 +401,7 @@ const Home = () => {
           <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or <Highlight>relative row index</Highlight>) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position in the other rows.</Paragraph.Text>
           <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times to the <Highlight>left</Highlight>. So, we want to add that number to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> <Highlight>before</Highlight> subtracting it from <CodeBlock>12</CodeBlock>, because it has shifted that many more <Highlight>additional</Highlight> times. Now that we are using both our keyword letter and message letter together, {`let's`} start creating the <Highlight>method</Highlight> that will return their <Highlight>porta compliment</Highlight>:</Paragraph.Text>
 
-          <p className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs text-xs">
+          <p className="p-5 my-10 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
             {
               generateSyntaxHighlightedCode(`
               public static int getPortaCompliment(char messageLetter, char keywordLetter) {
