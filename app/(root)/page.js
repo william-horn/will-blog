@@ -5,6 +5,7 @@ import Content from "@/components/Content";
 import Heading from "@/components/Heading";
 import Paragraph from "@/components/Paragraph";
 import Link from "next/link";
+import CodeEditor from "@/components/CodeEditor";
 
 import sleep from "@/lib/util/sleep";
 import { getResponsivePadding } from "@/lib/util/responsive";
@@ -42,6 +43,32 @@ const CodeBlock = ({
     {children}
   </span>
 }
+
+const CODE_SAMPLES = {}
+
+CODE_SAMPLES.portaComplimentIndex = `
+public class PortaCompliment { 
+  public static int getPortaRowIndexOf(char character) {
+    int characterByte = character;
+    int position = characterByte - 'a';
+
+    return (int) Math.floor(position/2);
+  }
+
+  public static int getPortaCompliment(char messageLetter, char keywordLetter) {
+    int keyIndex = getPortaRowIndexOf(keywordLetter);
+
+    int messageRowIndex = 12 - ('z' - messageLetter + keyIndex);
+
+    return messageRowIndex;
+  }
+
+  public static void main(String[] args) {
+    int portaComplimentIndex = getPortaCompliment('t', 'j');
+    System.out.println(portaComplimentIndex); // -> 2
+  }
+}
+`;
 
 const Home = () => {
 
@@ -108,7 +135,7 @@ const Home = () => {
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">Since the encryption and decryption of our message depends on whatever <Highlight>keyword</Highlight> the user inputs, we must account for this first.</Paragraph.Text>
           <Paragraph.Text className="font-medium">We know that each letter in the keyword maps <Highlight>one-to-one</Highlight> with each letter in our input message, and the <Highlight>keyword letters will repeat themselves</Highlight> if or when they run out.</Paragraph.Text>
-          <Paragraph.Text>So, lets assume we have this message to encrypt using this keyword:</Paragraph.Text>
+          <Paragraph.Text>So, lets assume we are given this message and this keyword:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -192,7 +219,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text className="inline">To recap, the first step to decoding a Della Porta cipher is take a <Highlight>keyword letter</Highlight> and find where it exists in the <Highlight>Key</Highlight> column of the chart. Let&apos;s continue using our <Link href="#data-output" className="underline">previous data example</Link>, and take a look at the first pair: <Link href="#data-output"><CodeBlock>{"{'t', 'j'}"}</CodeBlock></Link></Paragraph.Text>
+          <Paragraph.Text className="inline">To recap, the first step to decoding a Della Porta cipher is to take a <Highlight>keyword letter</Highlight> and find where it exists in the <Highlight>Key</Highlight> column of the chart. Let&apos;s continue using our <Link href="#data-output" className="underline">previous data example</Link>, and take a look at the first pair: <Link href="#data-output"><CodeBlock>{"{'t', 'j'}"}</CodeBlock></Link></Paragraph.Text>
           <Paragraph.Text className="italic">Remember: <CodeBlock>{`'t'`}</CodeBlock> is a letter in the message, and <CodeBlock>{`'j'`}</CodeBlock> is {"it's"} corresponding keyword letter buddy.</Paragraph.Text>
         </Paragraph>
 
@@ -219,7 +246,7 @@ const Home = () => {
         <Paragraph className="mt-14">
           <Paragraph.Text className="font-medium">In this case, our <Highlight>keyword letter</Highlight> is at the <Highlight>4th row index</Highlight> (starting from zero). But before going further, there is a small caveat that you may have already noticed: there are <Highlight>two</Highlight> letters in each <Highlight>Key</Highlight> column.</Paragraph.Text>
           <Paragraph.Text>Here, we located the row <CodeBlock>{`I,J`}</CodeBlock> because we were looking for the keyword letter <CodeBlock>{`'j'`}</CodeBlock>. However, we would still choose this same row if we were looking for the letter <CodeBlock>{`'i'`}</CodeBlock> as well. So, <Highlight>how do we code this?</Highlight></Paragraph.Text>
-          <Paragraph.Text id="single-letter-row">First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter was <CodeBlock>{`'c'`}</CodeBlock> and we had to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
+          <Paragraph.Text id="single-letter-row">First, {`let's`} assume our <Highlight>Key</Highlight> column just has <Highlight>single letters</Highlight> for now. How would we find a row? For example, {`let's`} say our keyword letter is <CodeBlock>{`'c'`}</CodeBlock> and we want to find that <Highlight>row index</Highlight> in this chart:</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -234,19 +261,19 @@ const Home = () => {
 
         <Paragraph className="mt-14">
           <Paragraph.Text>For simplicity, we will always assume all lowercase characters.</Paragraph.Text>
-          <Paragraph.Text className="font-medium">Since the rows fall in <Highlight>alphabetical</Highlight> order, the best way to determine the <Highlight>row index</Highlight> of <CodeBlock>{`'c'`}</CodeBlock> would be to find {`it's`} <Highlight>position</Highlight> in the alphabet. We can do this by getting the <Highlight>ASCII</Highlight> value of <CodeBlock>{`'a'`}</CodeBlock>&#8212;<CodeBlock>97</CodeBlock>&#8212;and subtracting that from the ASCII value of <CodeBlock>{`'c'`}</CodeBlock>&#8212;<CodeBlock>99</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text className="font-medium">Since the rows fall in <Highlight>alphabetical</Highlight> order, the best way to determine the <Highlight>row index</Highlight> of <CodeBlock>{`'c'`}</CodeBlock> would be to find {`it's`} <Highlight>position</Highlight> in the alphabet. We can do this by getting the <Highlight>ASCII</Highlight> value of <CodeBlock>{`'a'`}</CodeBlock>, which is <CodeBlock>97</CodeBlock>, and subtracting that from the ASCII value of <CodeBlock>{`'c'`}</CodeBlock>, which is <CodeBlock>99</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>Doing this, we get <CodeBlock>99 - 97</CodeBlock> which gives us <CodeBlock>2</CodeBlock>. Lo and behold, that is the row index of <CodeBlock>{`'c'`}</CodeBlock> that we were looking for. In general, we would apply the formula: </Paragraph.Text>
 
           <div className="p-5 my-10 text-base rounded-md bg-0-inset w-fit">
             {
               generateSyntaxHighlightedCode(`
-              int rowIndex = keywordLetter - 'a';
+              int keyIndex = keywordLetter - 'a';
             `)
             }
           </div>
 
           <Paragraph.Text>assuming <CodeBlock>keywordLetter</CodeBlock> is a <CodeBlock>char</CodeBlock> type.</Paragraph.Text>
-          <Paragraph.Text id="multi-letter-row">We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
+          <Paragraph.Text id="multi-letter-row">We can apply this same logic to our original example with a <span className="italic">slight</span> modification: we must ignore every <Highlight>other</Highlight> position in the alphabet, because we are <Highlight>grouping two letters</Highlight> into <Highlight>one row index</Highlight>. In other words, for every <Highlight>two alphabetically consecutive</Highlight> keyword letters, they must be at <Highlight>the same row index.</Highlight></Paragraph.Text>
           <Paragraph.Text>Therefore, since we are grouping by two, we just need to divide the position of our keyword letter in the alphabet by two. {`Here's`} what the function would look like:</Paragraph.Text>
         </Paragraph>
 
@@ -254,7 +281,7 @@ const Home = () => {
           <p className="text-xs md:text-base sm:text-sm">
             {
               generateSyntaxHighlightedCode(`
-              public static int getPortaRowIndexOf(String character) {
+              public static int getPortaRowIndexOf(char character) {
                 // convert character to ASCII
                 int characterByte = character;
 
@@ -268,7 +295,7 @@ const Home = () => {
                 // getPortaRowIndexOf('c') -> 1
                 // getPortaRowIndexOf('d') -> 1
                 // ...
-                return Math.floor(position/2);
+                return (int) Math.floor(position/2);
               }
             `)
             }
@@ -337,9 +364,9 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>So, the Porta compliment of <CodeBlock>{`'t'`}</CodeBlock> when paired with a keyword letter of <CodeBlock>{`'j'`}</CodeBlock>, is <CodeBlock>{`'c'`}</CodeBlock>. If we can do this for every letter in the message string, then we will have fully encrypted or decrypted our text. Now, <Highlight>how do we code this?</Highlight></Paragraph.Text>
-          <Paragraph.Text>Remember, this is still just <Highlight>case 1</Highlight>: when the <Highlight>message letter</Highlight> is in the second half of the alphabet. So, for this explanation we will assume all message letters are in the second half.</Paragraph.Text>
-          <Paragraph.Text>{`Let's`} take a look at the information we have so far, and how we can use that to calculate our answer of <CodeBlock>{`'c'`}</CodeBlock>. The first thing to notice is our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <Highlight>compliment letter</Highlight> <CodeBlock>{`'c'`}</CodeBlock> have the same index relative to the row their in.</Paragraph.Text>
+          <Paragraph.Text>So, the <Highlight>{`Porta compliment`}</Highlight> of <CodeBlock>{`'t'`}</CodeBlock> when paired with a keyword letter of <CodeBlock>{`'j'`}</CodeBlock>, is <CodeBlock>{`'c'`}</CodeBlock>. If we can do this for every letter in the message string, then we will have fully encrypted or decrypted our text. Now, <Highlight>how do we code this?</Highlight></Paragraph.Text>
+          <Paragraph.Text>Remember, this is still just <Highlight>case 1</Highlight>: when the <Highlight>message letter</Highlight> is in the <Highlight>second half</Highlight> of the alphabet. So, for this explanation we will assume all message letters are in the second half.</Paragraph.Text>
+          <Paragraph.Text>{`Let's`} take a look at the information we have so far, and how we can use that to calculate our answer of <CodeBlock>{`'c'`}</CodeBlock>. The first thing to notice is our <Highlight>message letter</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <Highlight>compliment letter</Highlight> <CodeBlock>{`'c'`}</CodeBlock> have the same index relative to the row {`they're`} in.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -353,9 +380,9 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text id="t-equals-2">This is significant because if both the <Highlight>message letter</Highlight> and the <Highlight>compliment letter</Highlight> have the same <Highlight>relative row index</Highlight>, then we can use one to find the other. For instance, we know that <CodeBlock>{`'t'`}</CodeBlock> is at index <CodeBlock>2</CodeBlock> in {`it's`} row, so we can simply do <br></br><CodeBlock>{`'a' + 2`}</CodeBlock> (the equivalent of <CodeBlock>97 + 2</CodeBlock>) to calculate the <Highlight>ASCII</Highlight> for <CodeBlock>{`'c'`}</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text id="t-equals-2">This is significant because if both the <Highlight>message letter</Highlight> and {`it's`} <Highlight>Porta compliment</Highlight> have the same <Highlight>relative row index</Highlight>, then we can use that information about one of them to find the other. For instance, we know that <CodeBlock>{`'t'`}</CodeBlock> is at index <CodeBlock>2</CodeBlock> in {`it's`} row, so we can simply do <br></br><CodeBlock>{`'a' + 2`}</CodeBlock> (the equivalent of <CodeBlock>97 + 2</CodeBlock>) to calculate the <Highlight>ASCII</Highlight> value for <CodeBlock>{`'c'`}</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>So then the question becomes, how do we find the relative row index of <CodeBlock>{`'t'`}</CodeBlock>?</Paragraph.Text>
-          <Paragraph.Text id="initial-position">As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index is</Highlight>, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number </Highlight> from {`it's`} <Highlight>initial position</Highlight>.</Paragraph.Text>
+          <Paragraph.Text id="initial-position">As mentioned from the beginning, each letter in the <Highlight>second half</Highlight> of the alphabet is <Highlight>shifting to the left</Highlight> by one slot for every descending row. This necessarily means that whatever the <Highlight>row index</Highlight> is, any given letter in that row has <Highlight>shifted to the left</Highlight> by that <Highlight>same number </Highlight> from {`it's`} <Highlight>initial position</Highlight>.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
@@ -385,7 +412,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>But remember, {`we're`} trying to find the <Highlight>relative row index</Highlight> of a letter starting from the <Highlight>beginning</Highlight> of the row, not the end of it. To account for this, we will <Highlight>subtract</Highlight> our {`letter's`} distance from <CodeBlock>{`'z'`}</CodeBlock>, which is <CodeBlock>6</CodeBlock> in this case, from <CodeBlock>12</CodeBlock>&#8212;the length of the row&#8212;to get the remaining row space. Therefore, our letter <CodeBlock>{`'t'`}</CodeBlock> is at an initial row index of <CodeBlock>12 - 6</CodeBlock>, which is <CodeBlock>6</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text>But remember, {`we're`} trying to find the <Highlight>relative row index</Highlight> of a letter starting from the <Highlight>beginning</Highlight> of the row, not the end of it. To account for this, we will <Highlight>subtract</Highlight> our {`letter's`} distance from <CodeBlock>{`'z'`}</CodeBlock>, which is <CodeBlock>6</CodeBlock> in this case, from <CodeBlock>12</CodeBlock>&#8212;the length of the row&#8212;to get the remaining row space. Therefore, our letter <CodeBlock>{`'t'`}</CodeBlock> is at an initial row index of <CodeBlock>12 - 6</CodeBlock>, which coincidentally is still <CodeBlock>6</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text>So in general, we can find the <Highlight>relative row index</Highlight> of a letter in the row <CodeBlock>A,B</CodeBlock> by doing:</Paragraph.Text>
 
           <div className="p-5 my-10 text-base rounded-md bg-0-inset w-fit">
@@ -399,33 +426,32 @@ const Home = () => {
           <Paragraph.Text>You may be asking: <span className="italic">{'"'}why not just do <span className="not-italic"><CodeBlock>messageLetter - {`'n'`}</CodeBlock>?</span>{'"'}</span></Paragraph.Text>
           <Paragraph.Text>And you could do this! However, it will make the math in the next few steps a bit more annoying. When we get there, {`we'll`} see why.</Paragraph.Text>
           <Paragraph.Text>Now that we have a formula for getting the <Highlight>initial position</Highlight> (or <Highlight>relative row index</Highlight>) of a letter in row <CodeBlock>A,B</CodeBlock>, we need to add how much that letter has shifted to this result to find {`it's`} new position in the other rows.</Paragraph.Text>
-          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times to the <Highlight>left</Highlight>. So, we want to add that number to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> <Highlight>before</Highlight> subtracting it from <CodeBlock>12</CodeBlock>, because it has shifted that many more <Highlight>additional</Highlight> times. Now that we are using both our keyword letter and message letter together, {`let's`} start creating the <Highlight>method</Highlight> that will return their <Highlight>porta compliment</Highlight>:</Paragraph.Text>
+          <Paragraph.Text>In the case of <CodeBlock>{`'t'`}</CodeBlock>, we know that it has shifted exactly <CodeBlock>getPortaRowIndexOf({`'j'`})</CodeBlock> many times to the <Highlight>left</Highlight>. So, we want to add that number to <CodeBlock>{`'z'`} - messageLetter</CodeBlock> <Highlight>before</Highlight> subtracting it from <CodeBlock>12</CodeBlock>, because it has shifted that many more <Highlight>additional</Highlight> times. Now that we are using both our keyword letter and message letter together, {`let's`} start creating a <Highlight>method</Highlight> that will return their <Highlight>Porta compliment</Highlight>:</Paragraph.Text>
 
           <p className="p-5 my-10 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
             {
               generateSyntaxHighlightedCode(`
               public static int getPortaCompliment(char messageLetter, char keywordLetter) {
                 // get the row index from our keyword letter
-                int rowIndex = getPortaRowIndexOf(keywordLetter);
+                int keyIndex = getPortaRowIndexOf(keywordLetter);
 
-                // calculate the final relative row index
-                int initialPosition = 12 - ('z' - messageLetter + rowIndex);
+                // calculate the final relative row index of the messageLetter in the chart
+                int messageRowIndex = 12 - ('z' - messageLetter + keyIndex);
 
-                // for now, return the position of the porta compliment in the row
-                return initialPosition;
+                // for now, return the position of the Porta compliment in the row
+                return messageRowIndex;
               }
             `)
             }
           </p>
 
-          <Paragraph.Text>For now, this method is only returning the <Highlight>position</Highlight> of the <Highlight>porta compliment</Highlight> in {`it's`} row. So, if we call <CodeBlock>{`getPortaCompliment('t', 'j')`}</CodeBlock>, we should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link>.</Paragraph.Text>
+          <Paragraph.Text>For now, this method is only returning the <Highlight>relative row index</Highlight> of the <Highlight>Porta compliment</Highlight> inside of {`it's`} row. So, if we call <CodeBlock>{`getPortaCompliment('t', 'j')`}</CodeBlock>, we should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link>.</Paragraph.Text>
+          <Paragraph.Text>Try it out yourself!</Paragraph.Text>
 
-          <div className="p-5 my-10 rounded-md bg-0-inset w-fit lg:text-lg md:text-md sm:text-sm">
-            {
-              generateSyntaxHighlightedCode(`
-              getPortaComplimentOf('t', 'j')
-            `)
-            }
+          <div className="w-full my-8" id="porta-compliment-index-code">
+            <CodeEditor
+            source={CODE_SAMPLES.portaComplimentIndex}
+            />
           </div>
 
           <Paragraph.Text>After <Highlight>substituting</Highlight> <CodeBlock>{`'t'`}</CodeBlock> and <CodeBlock>{`'j'`}</CodeBlock> in the body of the method, the final expression becomes <CodeBlock>{`12 - (122 - 116 + 4)`}</CodeBlock>, which indeed gives us the value of <CodeBlock>2</CodeBlock>.</Paragraph.Text>
@@ -459,18 +485,9 @@ const Home = () => {
           </div>
         </Paragraph>
 
-        <Paragraph className="my-14">
+        {/* <Paragraph className="my-14">
           <Paragraph.Text className="text-center">Try it out yourself!</Paragraph.Text>
-        </Paragraph>
-
-        <Paragraph id="online-java-compiler">
-          <iframe
-          frameBorder="0"
-          height="450px"  
-          src="https://onecompiler.com/embed/java?theme=dark" 
-          width="100%"
-          ></iframe>
-        </Paragraph>
+        </Paragraph> */}
 
       </Content>
     </Page>

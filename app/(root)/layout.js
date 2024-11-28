@@ -89,7 +89,7 @@ export default function RootLayout({ children }) {
         <div className="flex flex-row justify-center">
 
           <div className="w-[18rem] xl:block hidden">
-            <div className="w-[18rem] h-[100vh] sticky top-3">
+            <div className="w-[18rem] h-[100vh] sticky top-3 overflow-y-auto">
               <div className="table-of-contents-header">
                 <Heading textSize="xl" className="mb-3 text-0">Table of Contents</Heading>
               </div>
@@ -188,7 +188,7 @@ export default function RootLayout({ children }) {
               <div>
                 <ul className="">
                   <li className="mx-auto w-fit">
-                    <NavLink className="" href="#online-java-compiler">Online Java Compiler</NavLink>
+                    <NavLink className="" href="https://www.programiz.com/java-programming/online-compiler/">Online Java Compiler</NavLink>
                   </li>
                 </ul>
               </div>
