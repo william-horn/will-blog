@@ -7,6 +7,7 @@ import Heading from "@/components/Heading";
 import Text from "@/components/Text";
 import Divider from "@/components/Divider";
 import Link from "next/link";
+import Image from "next/image";
 
 import { 
   Jacquard_24, 
@@ -65,7 +66,7 @@ const NavLink = ({
     normal: {
       fontStyle: "font-[400]",
       bulletSize: "min-w-[0.4rem] min-h-[0.4rem]",
-      textColor: "text-white",
+      textColor: "text-[#ff6161]",
     }
   }
 
@@ -190,6 +191,23 @@ export default function RootLayout({ children }) {
                     <NavLink className="" href="#online-java-compiler">Online Java Compiler</NavLink>
                   </li>
                 </ul>
+              </div>
+
+              <div className="mt-6 table-of-contents-header">
+                <Heading textSize="xl" className="text-0">Della Porta Project</Heading>
+              </div>
+
+              <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
+
+              <div className="flex flex-row items-center justify-center gap-3 p-2">
+                <Image
+                className="h-[25px]"
+                src="/github-mark-white.png"
+                width={25}
+                height={25}
+                alt=""
+                />
+                <NavLink href="https://github.com/william-horn/della-porta-cipher">Check out our project on github</NavLink>
               </div>
             </div>
           </div>
