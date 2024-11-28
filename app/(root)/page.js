@@ -61,7 +61,7 @@ const Home = () => {
 
   return (
     <Page className="p-4">
-      <Content span="" className="flex flex-col mx-auto xl:w-[95%] w-full lg:w-[55%] md:w-[70%] sm:w-[80%]">
+      <Content span="" className="flex flex-col mx-auto xl:w-[95%] w-full lg:w-[65%] md:w-[70%] sm:w-[80%]">
         <div className="opacity-0 animate-fade-in-1">
           <Paragraph className="p-6 mb-10 rounded-md bg-0-inset">
             <Paragraph.Text bold textSize="lg" className="italic font-light text-center text-white"><Highlight className="">&quot;The Shifting Method&quot;</Highlight> is an algorithmic implementation developed by <Highlight className="">Will</Highlight>, <Highlight className="">Jaylen</Highlight>, and <Highlight className="">Alex</Highlight>, to encrypt and decrypt text using the Della Porta Cipher chart, as part of a college project. This article only focuses on <Link href="#implementation"><Highlight className="underline">our implementation</Highlight></Link> of the conversion algorithm. If you want to learn more about the Della Porta Cipher, <Link href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta"><Highlight className="underline">click here to visit the source we used.</Highlight></Link></Paragraph.Text>
@@ -223,7 +223,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="md:w-[600px] md:h-[222px] xl:w-[675px] xl:h-[250px]  w-[80vw] h-[30vw] min-w-[200px] min-h-[100px] relative">
+          <div className="lg:w-[600px] lg:h-[258px] xl:w-[40vw] xl:h-[17vw] max-w-[700px] max-h-[301px] w-[60vw] h-[26vw] min-w-[300px] min-h-[129px] relative">
             <Image
               src="/finding-c.webp"
               fill
@@ -313,7 +313,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="xl:w-[711px] xl:h-[204px] md:w-[600px] md:h-[172px] min-w-[200px] w-[80vw] h-[23vw] min-h-[57px] relative">
+          <div className="xl:w-[40vw] xl:h-[11.6vw] md:w-[600px] max-w-[700px] max-h-[203px] md:h-[172px] min-w-[200px] w-[80vw] h-[23vw] min-h-[57px] relative">
             <Image
               src="/finding-t.webp"
               fill
@@ -327,7 +327,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="xl:w-[720px] xl:h-[337px] md:w-[600px] md:h-[281px] min-w-[200px] w-[80vw] h-[37vw] min-h-[94px] relative">
+          <div className="xl:w-[40vw] xl:h-[18.8vw] md:w-[600px] max-w-[700px] max-h-[329px] md:h-[281px] min-w-[200px] w-[80vw] h-[37vw] min-h-[94px] relative">
             <Image
               src="/finding-c-from-t.webp"
               fill
@@ -343,7 +343,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="xl:w-[750px] xl:h-[278px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
+          <div className="xl:w-[40vw] xl:h-[14.8vw] md:w-[600px] max-w-[700px] max-h-[259px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
             <Image
               src="/row-relationship.webp"
               fill
@@ -359,7 +359,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="xl:w-[700px] xl:h-[333px] md:w-[600px] md:h-[285px] min-w-[200px] w-[80vw] h-[38vw] min-h-[95px] relative">
+          <div className="xl:w-[40vw] xl:h-[19vw] max-w-[700px] max-h-[333px] md:w-[600px] md:h-[285px] min-w-[200px] w-[80vw] h-[38vw] min-h-[95px] relative">
             <Image
               src="/shift-counting.webp"
               fill
@@ -375,7 +375,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph id="relative-row-index" className="mt-14">
-          <div className="xl:w-[700px] xl:h-[287px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
+          <div className="xl:w-[40vw] xl:h-[16.4vw] max-w-[700px] max-h-[287px] md:w-[600px] md:h-[222px] min-w-[200px] w-[80vw] h-[30vw] min-h-[74px] relative">
             <Image
               src="/t-from-z.webp"
               fill
@@ -433,7 +433,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <div className="xl:w-[700px] xl:h-[245px] md:w-[600px] md:h-[210px] min-w-[200px] w-[80vw] h-[28vw] min-h-[70px] relative">
+          <div className="xl:w-[40vw] xl:h-[14.16vw] max-w-[700px] max-h-[245px] md:w-[600px] md:h-[210px] min-w-[200px] w-[80vw] h-[28vw] min-h-[70px] relative">
             <Image
               src="/letter-snap-back.webp"
               fill
