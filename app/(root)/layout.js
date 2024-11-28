@@ -96,7 +96,7 @@ export default function RootLayout({ children }) {
 
               <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
 
-              <div className="pl-4 side-bar-body">
+              <div className="pl-4 mb-5 side-bar-body">
 
                 <div className="content-link-body">
                   <ul>
@@ -140,10 +140,13 @@ export default function RootLayout({ children }) {
                           <NavLink href="#case-1" type="normal">Case 1: Second Half</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#initial-position" type="normal">Initial letter position</NavLink>
+                          <NavLink href="#initial-position" type="normal">Initial column number</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#relative-row-index" type="normal">Relative row index</NavLink>
+                          <NavLink href="#column-number-with-shift" type="normal">Column number with shifting</NavLink>
+                        </li>
+                        <li className="w-fit">
+                          <NavLink href="#accounting-for-row-reset" type="normal">Handling column number resetting</NavLink>
                         </li>
                       </ul>
                     </li>
