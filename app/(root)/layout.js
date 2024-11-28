@@ -60,20 +60,22 @@ const NavLink = ({
     heading: {
       fontStyle: "font-[600]",
       bulletSize: "min-w-[0.5rem] min-h-[0.5rem]",
-      textColor: "text-1"
+      textColor: "text-1",
+      bulletColor: "bg-[#c1c1c1]"
     },
 
     normal: {
       fontStyle: "font-[400]",
-      bulletSize: "min-w-[0.4rem] min-h-[0.4rem]",
-      textColor: "text-[#ff6161]",
+      bulletSize: "min-w-[0.5rem] min-h-[0.5rem]",
+      textColor: "text-[#c1c1c1]",
+      bulletColor: "bg-[var(--text-color-1)]"
     }
   }
 
   const style = config[type];
 
   return <Link href={href} className={`flex items-center gap-2`}>
-    <span className={`rounded-[50%] ${style.bulletSize} bg-white`}></span>
+    <span className={`rounded-[50%] ${style.bulletSize} ${style.bulletColor}`}></span>
     <Heading className={twMerge(`hover:underline ${justify} ${style.textColor} ${style.fontStyle}`, importedClassName)}>{children}</Heading>
   </Link>
 }

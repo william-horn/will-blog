@@ -30,7 +30,7 @@ const ContentHeading = ({
   className: importedClassName,
   ...rest
 }) => {
-  return <Heading className={twMerge("text-1 font-6", importedClassName)} textSize="6xl" {...rest}>
+  return <Heading className={twMerge("text-[#e2e2e2] font-0", importedClassName)} textSize="4xl" {...rest}>
     {children}
   </Heading>
 }
@@ -106,7 +106,7 @@ const Home = () => {
 
           <Paragraph className="mt-14">
             <div>
-              <Paragraph.Text textSize="3xl" className="font-medium text-center text-1 font-6">Della Porta Cipher Chart:</Paragraph.Text>
+              <Paragraph.Text textSize="3xl" className="font-medium text-center text-0 font-6">Della Porta Cipher Chart:</Paragraph.Text>
               <div className="md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] w-[60vw] h-[60vw] min-w-[300px] min-h-[300px] relative">
                 <Image
                   src="/table.webp"

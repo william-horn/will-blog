@@ -15,11 +15,13 @@ const Header = () => {
       className={`${getResponsivePadding("6xl", "top")} ${getResponsivePadding("4xl", "bottom")}`}
       >
         <Heading 
-        textSize="7xl" 
+        textSize="5xl" 
         type="h1" 
-        className={`relative leading-tight animate-fade-down-0 text-1 px-4 font-6 ${getResponsivePadding("6xl", "bottom")}`}
+        className={`relative leading-tight animate-fade-down-0 text-1 px-4 font-0 ${getResponsivePadding("6xl", "bottom")}`}
         >
-          Della Porta Cipher - The Shifting Method
+          Della Porta Cipher
+          <br/>
+          <span className="text-2xl font-0 italic">{`"The Shifting Method"`}</span>
         </Heading>
 
         <Text 
