@@ -1,26 +1,20 @@
 "use client";
 
 import React from 'react';
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { useParams } from 'next/navigation';
 // import { useSearchParams, usePathname } from 'next/navigation';
-import { useRouter, useParams } from 'next/navigation';
-import useHash from '@/hooks/useHash';
 
 const CodeEditor = ({
   source="",
 }) => {
   const codeEditor = useRef(null);
-  
   const params = useParams();
-  const hash = useHash();
-
-  console.log("Hash: ", hash);
 
   useEffect(() => {
-    console.log("RERENDERED COMPONENT");
     const codeEditorFrame = codeEditor.current;
 
-    const response = codeEditorFrame.contentWindow.postMessage({
+    codeEditorFrame.contentWindow.postMessage({
       eventType: 'populateCode',
       language: 'java',
       files: [
@@ -31,12 +25,14 @@ const CodeEditor = ({
       ]
     }, "*");
 
-    console.log("response: ", response);
+    codeEditorFrame.contentWindow.postMessage({
+      eventType: 'triggerRun'
+    }, "*");
 
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[450px]">
       <iframe
       ref={codeEditor}
       frameBorder="0"
