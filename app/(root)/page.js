@@ -184,25 +184,18 @@ const Home = () => {
           <div className="text-sm lg:text-base">
             {
               generateSyntaxHighlightedCode(`
-              { 't', 'j' },
-
-              { 'h', 'u' },
-
-              { 'e', 'm' },
-
-              { ' ', ' ' },
-
-              { 'q', 'p' },
-
-              { 'u', 'e' },
-
-              { 'i', 'd' },
-
-              { 'c', 'j' },
-
-              { 'k', 'u' },
-
-              ...
+              {
+                { 't', 'j' },
+                { 'h', 'u' },
+                { 'e', 'm' },
+                { ' ', ' ' },
+                { 'q', 'p' },
+                { 'u', 'e' },
+                { 'i', 'd' },
+                { 'c', 'j' },
+                { 'k', 'u' },
+                ...
+              }
             `)
             }
           </div>
@@ -333,7 +326,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-12">
-          <Heading id="case-1" className="text-4xl leading-relaxed text-white font-9">Case 1: Message Letter in Second Half</Heading>
+          <Heading id="case-1" className="text-2xl leading-relaxed text-white font-0">Case 1: Message Letter in Second Half</Heading>
         </Paragraph>
 
 
