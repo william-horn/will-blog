@@ -589,10 +589,10 @@ const Home = () => {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
                 // calculate the alleged column of the compliment, resettig the column back to 0 if it goes out of bounds
-                int messageCol = (messageLetter - 'a' + keyIndex)%13;
+                int finalMessageCol = (messageLetter - 'a' + keyIndex)%13;
                
                 // return key index for now
-                return messageCol
+                return finalMessageCol
               }
             `)
             }
