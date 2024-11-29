@@ -55,12 +55,16 @@ public class PortaCompliment {
     return (int) Math.floor(position/2);
   }
 
-  public static int getSecondHalfCompliment(char messageLetter, char keywordLetter) {
+  public static int getSecondHalfCompliment(char messageLetter, char keywordLetter) 
+  {
+    // get the row index from our keyword letter
     int keyIndex = getPortaRowIndexOf(keywordLetter);
 
-    int messageRowIndex = 12 - ('z' - messageLetter + keyIndex);
+    // calculate the column of the compliment letter
+    int complimentCol = 12 - ('z' - messageLetter + keyIndex);
 
-    return messageRowIndex;
+    // for now, just return the column number
+    return complimentCol;
   }
 
   public static void main(String[] args) {
@@ -430,11 +434,11 @@ const Home = () => {
                 // get the row index from our keyword letter
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
-                // calculate the column of the message letter
-                int messageCol = 12 - ('z' - messageLetter + keyIndex);
+                // calculate the column of the compliment letter
+                int complimentCol = 12 - ('z' - messageLetter + keyIndex);
 
                 // for now, just return the column number
-                return messageCol;
+                return complimentCol;
               }
             `)
             }
@@ -477,9 +481,9 @@ const Home = () => {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
                 // the final column of the message after accounting for shifting
-                int finalMessageCol = 12 - ('z' - messageLetter + keyIndex)%13;
+                int complimentCol = 12 - ('z' - messageLetter + keyIndex)%13;
 
-                return finalMessageCol;
+                return complimentCol;
               }
             `)
             }
@@ -499,10 +503,10 @@ const Home = () => {
               public static char getSecondHalfCompliment(char messageLetter, char keywordLetter) 
               {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
-                int finalMessageCol = 12 - ('z' - messageLetter + keyIndex)%13;
+                int complimentCol = 12 - ('z' - messageLetter + keyIndex)%13;
 
                 // get the compliment character by getting the same column from the compliment row
-                char portaCompliment = 'a' + finalMessageCol;
+                char portaCompliment = (char) ('a' + complimentCol);
 
                 // return the final porta compliment character
                 return portaCompliment;
@@ -537,7 +541,7 @@ const Home = () => {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
                
                 // return key index for now
-                return keyIndex
+                return keyIndex;
               }
             `)
             }
@@ -575,7 +579,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text id="column-number-with-shift-2">Now that we have the <Highlight>initial column</Highlight>, which is <CodeBlock>4</CodeBlock> in this case, we can simply add the <CodeBlock>keyIndex</CodeBlock> to this number in order to find the <Highlight>new column</Highlight> of the shifted <Highlight>Porta compliment</Highlight>. So, the Porta compliment should reside in the column: <CodeBlock>{`messageLetter - 'a' + keyIndex`}</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text id="column-number-with-shift-2">Now that we have the <Highlight>initial column</Highlight>, which is <CodeBlock>4</CodeBlock> in this case, we can simply add the <CodeBlock>keyIndex</CodeBlock> to this number in order to find the <Highlight>final column</Highlight> of the shifted <Highlight>Porta compliment</Highlight>. So, the Porta compliment should reside in the column: <CodeBlock>{`messageLetter - 'a' + keyIndex`}</CodeBlock>.</Paragraph.Text>
           <Paragraph.Text id="accounting-for-row-reset-2">But remember, just like before, this does not account for the <Highlight>column reset</Highlight> that occurs once our newly calculated column goes out of bounds&mdash;reaching the end of the row. So again, we will need to take the <Highlight>mod</Highlight> of the new column so that it resets back to <CodeBlock>0</CodeBlock> every <Highlight>13th</Highlight> column:</Paragraph.Text>
         </Paragraph>
 
@@ -589,10 +593,10 @@ const Home = () => {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
                 // calculate the alleged column of the compliment, resettig the column back to 0 if it goes out of bounds
-                int finalMessageCol = (messageLetter - 'a' + keyIndex)%13;
+                int complimentCol = (messageLetter - 'a' + keyIndex)%13;
                
                 // return key index for now
-                return finalMessageCol
+                return complimentCol;
               }
             `)
             }
@@ -600,7 +604,60 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>Test</Paragraph.Text>
+          <Paragraph.Text>This will now represent the <Highlight>final column</Highlight> containing the <Highlight>Porta compliment</Highlight>, accounting for column shifting and resetting. All {`that's`} left is to add this final column number to the beginning of the first character in the <Highlight>compliment row</Highlight>, to find the <Highlight>Porta compliment</Highlight>.</Paragraph.Text>
+          <Paragraph.Text>So, the final result for calculating the <Highlight>first half</Highlight> compliment would be:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="p-5 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
+            {
+              generateSyntaxHighlightedCode(`
+              // CASE 2: FIRST HALF
+              public static char getFirstHalfCompliment(char messageLetter, char keywordLetter) 
+              {
+                int keyIndex = getPortaRowIndexOf(keywordLetter);
+                int complimentCol = (messageLetter - 'a' + keyIndex)%13;
+
+                // get the porta compliment from the compliment row, at the 'finalMessageCol' column.
+                char portaCompliment = (char) ('n' + complimentCol);
+               
+                // return key index for now
+                return portaCompliment;
+              }
+            `)
+            }
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+            <Paragraph.Text>Now that we have both cases fully accounted for, we can look at how to combine them into a single method.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-16">
+          <ContentHeading id="porta-compliment-method">Porta Compliment Method</ContentHeading>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+            <Paragraph.Text>We made separate methods for handling each message letter <Highlight>case</Highlight>, but we can combine this logic concisely into a single method. {`We'll`} call it <CodeBlock>getPortaCompliment()</CodeBlock>.</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="p-5 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
+            {
+              generateSyntaxHighlightedCode(`
+              // CASE 2: FIRST HALF
+              public static char getPortaCompliment(char messageLetter, char keywordLetter) 
+              {
+                int keyIndex = getPortaRowIndexOf(keywordLetter);
+
+                // ...
+               
+                // return key index for now
+                return portaCompliment;
+              }
+            `)
+            }
+          </div>
         </Paragraph>
 
         {/* <Paragraph className="mt-14">

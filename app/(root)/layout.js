@@ -138,7 +138,7 @@ export default function RootLayout({ children }) {
                     </li>
 
                     <li className="w-fit">
-                      <NavLink href="#porta-compliment" type="heading">The Porta Compliment</NavLink>
+                      <NavLink href="#porta-compliment" type="heading">Porta Compliment Cases</NavLink>
                     </li>
                     <li className="pl-5">
                       <ul>
@@ -167,6 +167,9 @@ export default function RootLayout({ children }) {
                           <NavLink href="#accounting-for-row-reset-2" type="normal">(Case 2) Accounting for column reset</NavLink>
                         </li>
                       </ul>
+                    </li>
+                    <li className="w-fit">
+                      <NavLink href="#porta-compliment-method" type="heading">Porta Compliment Method</NavLink>
                     </li>
                   </ul>
                 </div>
