@@ -152,13 +152,19 @@ export default function RootLayout({ children }) {
                           <NavLink href="#column-number-with-shift" type="normal">(Case 1) Find column accounting for shift</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#accounting-for-row-reset" type="normal">(Case 1) Handling column reset</NavLink>
+                          <NavLink href="#accounting-for-row-reset" type="normal">(Case 1) Accounting for column reset</NavLink>
                         </li>
                         <li className="w-fit">
                           <NavLink href="#case-2" type="normal" className="font-[600]">Case 2: Message Letter in First Half</NavLink>
                         </li>
                         <li className="w-fit">
                           <NavLink href="#initial-position-2" type="normal">(Case 2) Finding initial column</NavLink>
+                        </li>
+                        <li className="w-fit">
+                          <NavLink href="#column-number-with-shift-2" type="normal">(Case 2) Finding column accounting for shift</NavLink>
+                        </li>
+                        <li className="w-fit">
+                          <NavLink href="#accounting-for-row-reset-2" type="normal">(Case 2) Accounting for column reset</NavLink>
                         </li>
                       </ul>
                     </li>

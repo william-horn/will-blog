@@ -55,7 +55,7 @@ public class PortaCompliment {
     return (int) Math.floor(position/2);
   }
 
-  public static int getPortaCompliment(char messageLetter, char keywordLetter) {
+  public static int getSecondHalfCompliment(char messageLetter, char keywordLetter) {
     int keyIndex = getPortaRowIndexOf(keywordLetter);
 
     int messageRowIndex = 12 - ('z' - messageLetter + keyIndex);
@@ -64,7 +64,7 @@ public class PortaCompliment {
   }
 
   public static void main(String[] args) {
-    int portaComplimentIndex = getPortaCompliment('t', 'j');
+    int portaComplimentIndex = getSecondHalfCompliment('t', 'j');
     System.out.println(portaComplimentIndex); // -> 2
   }
 }
@@ -425,8 +425,7 @@ const Home = () => {
             {
               generateSyntaxHighlightedCode(`
               // CASE 1: SECOND HALF
-
-              public static int getPortaCompliment(char messageLetter, char keywordLetter) 
+              public static int getSecondHalfCompliment(char messageLetter, char keywordLetter) 
               {
                 // get the row index from our keyword letter
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
@@ -441,7 +440,7 @@ const Home = () => {
             }
           </p>
 
-          <Paragraph.Text>For now, this method is only returning the <Highlight>column</Highlight> of the <Highlight>Porta compliment</Highlight> with respect to {`it's`} row. So, if we call <CodeBlock>{`getPortaCompliment('t', 'j')`}</CodeBlock>, we should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link>.</Paragraph.Text>
+          <Paragraph.Text>For now, this method is only returning the <Highlight>column</Highlight> of the <Highlight>Porta compliment</Highlight> with respect to {`it's`} row. So, if we call <CodeBlock>{`getSecondHalfCompliment('t', 'j')`}</CodeBlock>, we should get the value of <CodeBlock>2</CodeBlock>, as explained <Link href="#t-equals-2" className="underline">here</Link>.</Paragraph.Text>
           <Paragraph.Text>Try it out yourself!</Paragraph.Text>
 
           <div className="w-full my-8" id="porta-compliment-index-code">
@@ -473,7 +472,7 @@ const Home = () => {
             {
               generateSyntaxHighlightedCode(`
               // CASE 1: SECOND HALF
-              public static int getPortaCompliment(char messageLetter, char keywordLetter) 
+              public static int getSecondHalfCompliment(char messageLetter, char keywordLetter) 
               {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
@@ -497,7 +496,7 @@ const Home = () => {
             {
               generateSyntaxHighlightedCode(`
               // CASE 1: SECOND HALF
-              public static char getPortaCompliment(char messageLetter, char keywordLetter) 
+              public static char getSecondHalfCompliment(char messageLetter, char keywordLetter) 
               {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
                 int finalMessageCol = 12 - ('z' - messageLetter + keyIndex)%13;
@@ -522,7 +521,7 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>When the <Highlight>message letter</Highlight> is in the <Highlight>first half</Highlight> of the alphabet, the same is true as before. The <Highlight>Porta compliment</Highlight> will exist in the <Highlight>compliment row</Highlight>, a.k.a the <Highlight>opposite half</Highlight> of the alphabet, in the <Highlight>same column</Highlight>.</Paragraph.Text>
+          <Paragraph.Text>When the <Highlight>message letter</Highlight> is in the <Highlight>first half</Highlight> of the alphabet, the same is true as before: The <Highlight>Porta compliment</Highlight> will exist in the <Highlight>compliment row</Highlight> (the <Highlight>opposite half</Highlight> of the alphabet) in the <Highlight>same column</Highlight>.</Paragraph.Text>
           <Paragraph.Text>For this case, {`let's`} refer back to our <Link href="#data-output" className="underline">output sample</Link> and choose a pair that has a message letter in the <Highlight>first half</Highlight>. {`Let's`} use <CodeBlock>{`{'e', 'm'}`}</CodeBlock>. The first step is still to find the row containing the keyword letter, so we will start the same as before and begin by constructing the method.</Paragraph.Text>
           <Paragraph.Text>{`Let's`} continue calling the row containing our <Highlight>keyword letter</Highlight>, <CodeBlock>keyIndex</CodeBlock>.</Paragraph.Text>
         </Paragraph>
@@ -532,7 +531,7 @@ const Home = () => {
             {
               generateSyntaxHighlightedCode(`
               // CASE 2: FIRST HALF
-              public static int getPortaCompliment(char messageLetter, char keywordLetter) 
+              public static int getFirstHalfCompliment(char messageLetter, char keywordLetter) 
               {
                 // find the row of the keyword letter, same as before
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
@@ -576,8 +575,32 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-          <Paragraph.Text>Now that we have the <Highlight>initial column</Highlight>, which is <CodeBlock>4</CodeBlock> in this case, we can simply add the <CodeBlock>keyIndex</CodeBlock> to this number in order to find the <Highlight>new column</Highlight> of the shifted <Highlight>Porta compliment</Highlight>. So, the Porta compliment should reside in the column: <CodeBlock>{`messageLetter - 'a' + keyIndex`}</CodeBlock>.</Paragraph.Text>
-          <Paragraph.Text>But remember, just like before, this does not account for the <Highlight>column reset</Highlight> that occurs once our newly calculated column goes out of bounds.</Paragraph.Text>
+          <Paragraph.Text id="column-number-with-shift-2">Now that we have the <Highlight>initial column</Highlight>, which is <CodeBlock>4</CodeBlock> in this case, we can simply add the <CodeBlock>keyIndex</CodeBlock> to this number in order to find the <Highlight>new column</Highlight> of the shifted <Highlight>Porta compliment</Highlight>. So, the Porta compliment should reside in the column: <CodeBlock>{`messageLetter - 'a' + keyIndex`}</CodeBlock>.</Paragraph.Text>
+          <Paragraph.Text id="accounting-for-row-reset-2">But remember, just like before, this does not account for the <Highlight>column reset</Highlight> that occurs once our newly calculated column goes out of bounds&mdash;reaching the end of the row. So again, we will need to take the <Highlight>mod</Highlight> of the new column so that it resets back to <CodeBlock>0</CodeBlock> every <Highlight>13th</Highlight> column:</Paragraph.Text>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <div className="p-5 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
+            {
+              generateSyntaxHighlightedCode(`
+              // CASE 2: FIRST HALF
+              public static int getFirstHalfCompliment(char messageLetter, char keywordLetter) 
+              {
+                int keyIndex = getPortaRowIndexOf(keywordLetter);
+
+                // calculate the alleged column of the compliment, resettig the column back to 0 if it goes out of bounds
+                int messageCol = (messageLetter - 'a' + keyIndex)%13;
+               
+                // return key index for now
+                return messageCol
+              }
+            `)
+            }
+          </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+          <Paragraph.Text>Test</Paragraph.Text>
         </Paragraph>
 
         {/* <Paragraph className="mt-14">
