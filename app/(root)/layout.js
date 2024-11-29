@@ -55,6 +55,7 @@ const NavLink = ({
   type="normal",
   justify="text-left",
   className: importedClassName="",
+  bullet=true,
 }) => {
   const config = {
     heading: {
@@ -75,7 +76,11 @@ const NavLink = ({
   const style = config[type];
 
   return <Link href={href} className={`flex items-center gap-2`}>
-    <span className={`rounded-[50%] ${style.bulletSize} ${style.bulletColor}`}></span>
+    {
+      bullet ? 
+        <span className={`rounded-[50%] ${style.bulletSize} ${style.bulletColor}`}></span>:
+        <></>
+    }
     <Heading className={twMerge(`hover:underline ${justify} ${style.textColor} ${style.fontStyle}`, importedClassName)}>{children}</Heading>
   </Link>
 }
@@ -91,17 +96,16 @@ export default function RootLayout({ children }) {
         <div className="flex flex-row justify-center">
 
           <div className="w-[18rem] xl:block hidden">
-            <div className="w-[18rem] h-[100vh] sticky top-3 overflow-y-auto">
+            <div className="w-[18rem] h-[100vh] sticky top-3 flex flex-col">
               <div className="table-of-contents-header">
-                <Heading textSize="xl" className="mb-3 text-0">Table of Contents</Heading>
+                <Heading textSize="xl" className="text-0">Table of Contents</Heading>
+                <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
               </div>
 
-              <Divider size="" className="h-[1px] bg-[#393939] mx-2 mt-3 mb-5"/>
+              <div className="side-bar-body pl-4 h-full relative">
 
-              <div className="pl-4 mb-5 side-bar-body">
-
-                <div className="content-link-body">
-                  <ul>
+                <div className="content-link-body absolute h-full pb-10">
+                  <ul className="h-full overflow-y-auto">
                     {/* HOW DOES IT WORK */}
                     <li className="w-fit">
                       <NavLink href="#implementation" type="heading">How Does it Work?</NavLink>
@@ -139,16 +143,22 @@ export default function RootLayout({ children }) {
                     <li className="pl-5">
                       <ul>
                         <li className="w-fit">
-                          <NavLink href="#case-1" type="normal">Case 1: Second Half</NavLink>
+                          <NavLink href="#case-1" type="normal" className="font-[600]">Case 1: Message Letter in Second Half</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#initial-position" type="normal">Initial column number</NavLink>
+                          <NavLink href="#initial-position" type="normal">(Case 1) Finding initial column</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#column-number-with-shift" type="normal">Column number with shifting</NavLink>
+                          <NavLink href="#column-number-with-shift" type="normal">(Case 1) Find column accounting for shift</NavLink>
                         </li>
                         <li className="w-fit">
-                          <NavLink href="#accounting-for-row-reset" type="normal">Handling column number resetting</NavLink>
+                          <NavLink href="#accounting-for-row-reset" type="normal">(Case 1) Handling column reset</NavLink>
+                        </li>
+                        <li className="w-fit">
+                          <NavLink href="#case-2" type="normal" className="font-[600]">Case 2: Message Letter in First Half</NavLink>
+                        </li>
+                        <li className="w-fit">
+                          <NavLink href="#initial-position-2" type="normal">(Case 2) Finding initial column</NavLink>
                         </li>
                       </ul>
                     </li>
@@ -176,10 +186,10 @@ export default function RootLayout({ children }) {
               <div>
                 <ul className="">
                   <li className="mx-auto w-fit">
-                    <NavLink className="underline text-cyan-300" href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta">Della Porta cipher article</NavLink>
+                    <NavLink bullet={false} className="text-cyan-300" href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/porta">Della Porta cipher article</NavLink>
                   </li>
                   <li className="mx-auto w-fit">
-                    <NavLink className="underline text-cyan-300" href="https://nonvalet.com/posts/20210413_java_console_colors/#:~:text=To%20change%20terminal%20colors%2C%20you,names%20for%20better%20code%20readability">Console Colors</NavLink>
+                    <NavLink bullet={false} className="text-cyan-300" href="https://nonvalet.com/posts/20210413_java_console_colors/#:~:text=To%20change%20terminal%20colors%2C%20you,names%20for%20better%20code%20readability">Console Colors</NavLink>
                   </li>
                 </ul>
               </div>
@@ -193,7 +203,7 @@ export default function RootLayout({ children }) {
               <div>
                 <ul className="">
                   <li className="mx-auto w-fit">
-                    <NavLink className="" href="https://www.programiz.com/java-programming/online-compiler/">Online Java Compiler</NavLink>
+                    <NavLink bullet={false} className="" href="https://www.programiz.com/java-programming/online-compiler/">Online Java Compiler</NavLink>
                   </li>
                 </ul>
               </div>
@@ -212,7 +222,18 @@ export default function RootLayout({ children }) {
                 height={25}
                 alt=""
                 />
-                <NavLink href="https://github.com/william-horn/della-porta-cipher">Check out our project on github</NavLink>
+                <NavLink className="text-[#c622c6]" href="https://github.com/william-horn/della-porta-cipher">Check out our project on github</NavLink>
+              </div>
+
+              <div className="flex flex-row items-center justify-center gap-3 p-2">
+                <Image
+                className="h-[25px]"
+                src="/yt-logo.webp"
+                width={33}
+                height={25}
+                alt=""
+                />
+                <NavLink className="text-[#c622c6]" href="https://www.youtube.com/@williamhorn363">YouTube Channel</NavLink>
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <>
       <footer
-      className="mt-14 bg-0-inset h-[200px]"
+      className="bg-0-inset h-[200px]"
       >
         <Text 
         textSize="3xl"
