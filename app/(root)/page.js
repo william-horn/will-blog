@@ -638,26 +638,39 @@ const Home = () => {
         </Paragraph>
 
         <Paragraph className="mt-14">
-            <Paragraph.Text>We made separate methods for handling each message letter <Highlight>case</Highlight>, but we can combine this logic concisely into a single method. {`We'll`} call it <CodeBlock>getPortaCompliment()</CodeBlock>.</Paragraph.Text>
+            <Paragraph.Text>We made separate methods for handling each <Highlight>message letter case</Highlight> individually, but we can combine this logic concisely into a single method to get <Highlight>any Porta compliment</Highlight>. {`We'll`} call it <CodeBlock>getPortaCompliment()</CodeBlock>.</Paragraph.Text>
         </Paragraph>
 
         <Paragraph className="mt-14">
           <div className="p-5 text-xs rounded-md bg-0-inset w-fit lg:text-base md:text-sm sm:text-xs">
             {
               generateSyntaxHighlightedCode(`
-              // CASE 2: FIRST HALF
               public static char getPortaCompliment(char messageLetter, char keywordLetter) 
               {
                 int keyIndex = getPortaRowIndexOf(keywordLetter);
 
-                // ...
-               
+                // leave portaCompliment uninitialized until we determine how to calculate it
+                char portaCompliment;
+
+                if (messageLetter >= 'n') {
+                  // CASE 1: Message letter is in the second half of the alphabet
+                  portaCompliment = (char) ('a' + 12 - ('z' - messageLetter + keyIndex)%13);
+
+                } else {
+                  // CASE 2: Message letter is in the first half of the alphabet
+                  portaCompliment = (char) ('n' + (messageLetter - 'a' + keyIndex)%13);
+                }
+
                 // return key index for now
                 return portaCompliment;
               }
             `)
             }
           </div>
+        </Paragraph>
+
+        <Paragraph className="mt-14">
+            <Paragraph.Text>The final method above is just combining the logic of <CodeBlock>getFirstHalfCompliment()</CodeBlock> and <CodeBlock>getSecondHalfCompliment()</CodeBlock> with a condition checking if the <Highlight>message letter</Highlight> is in the first or second half of the alphabet. This is method is the <Highlight>core of the algorithm</Highlight>, since it contains the complete encryption and decryption logic. </Paragraph.Text>
         </Paragraph>
 
         {/* <Paragraph className="mt-14">
